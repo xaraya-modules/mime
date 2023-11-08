@@ -15,7 +15,7 @@
  * Modify an item of a mime object
  *
  */
-sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.factory');
 
 function mime_admin_modify()
 {
@@ -33,7 +33,7 @@ function mime_admin_modify()
         return;
     }
 
-    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object'] = DataObjectFactory::getObject(['name' => $name]);
     $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'mime';

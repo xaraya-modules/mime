@@ -15,7 +15,7 @@
  * Create a new item of a mimeobject
  *
  */
-sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.factory');
 
 function mime_admin_new()
 {
@@ -30,7 +30,7 @@ function mime_admin_new()
         return;
     }
 
-    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object'] = DataObjectFactory::getObject(['name' => $name]);
     $data['tplmodule'] = 'mime';
     $data['authid'] = xarSec::genAuthKey('mime');
 

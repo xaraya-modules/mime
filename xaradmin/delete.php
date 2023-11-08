@@ -15,7 +15,7 @@
  * Delete an item
  *
  */
-sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.factory');
 
 function mime_admin_delete()
 {
@@ -33,7 +33,7 @@ function mime_admin_delete()
         return;
     }
 
-    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object'] = DataObjectFactory::getObject(['name' => $name]);
     $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'mime';

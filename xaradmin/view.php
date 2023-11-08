@@ -32,7 +32,7 @@ function mime_admin_view($args)
     }
 
     // Get the available dropdown options
-    $object = DataObjectMaster::getObjectList(['objectid' => 1]);
+    $object = DataObjectFactory::getObjectList(['objectid' => 1]);
     $data['objectname'] = xarModUserVars::get($modulename, 'defaultmastertable');
     $items = $object->getItems();
     $options = [];
