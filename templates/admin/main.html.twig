@@ -1,0 +1,18 @@
+{# @mime/admin/main.html.twig #}
+
+{% block main %}
+{{ include('@mime/includes/admin-mod-head.html.twig') }}
+    <div class="xar-mod-body">
+        {% set label = 'Official Icon' %}
+        <img src="{{ xar_imageurl('module-generic.png', 'base') }}" alt="{{ label }}" width="96" height="96" class="xar-module-icon"/>
+
+        <h2>
+            Overview
+        </h2>
+
+        <p>
+            Dummy mime text
+        </p>
+        <div style="clear:both">&#160;</div>
+    </div>
+{% endblock %}
