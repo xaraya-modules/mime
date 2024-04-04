@@ -18,7 +18,7 @@
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   array      $mimeList   List of mimetypes with their extensions (if any) and magics (if any)
- *  @returns boolean    true if successful importing into database, false otherwise.
+ *  @return boolean    true if successful importing into database, false otherwise.
  */
 
 xarMod::apiLoad('mime', 'user');

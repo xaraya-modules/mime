@@ -39,7 +39,7 @@
  *    @author       Carl P. Corliss       <carl.corliss@xaraya.com>
  *    @param        string    $needle     What are you searching for?
  *    @param        array     $haystack   What you want to search in
- *    @returns      array || FALSE        array of keys or FALSE if not found.
+ *    @return      array || FALSE        array of keys or FALSE if not found.
  *    @access        public
  */
 
