@@ -23,7 +23,7 @@
  *  returns array      false on error, the sub type id otherwise
  */
 
-function mime_userapi_add_subtype($args)
+function mime_userapi_add_subtype(array $args = [], $context = null)
 {
     extract($args);
 
@@ -53,10 +53,10 @@ function mime_userapi_add_subtype($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
 
     // table and column definitions
-    $subtype_table =& $xartable['mime_subtype'];
+    $subtype_table = & $xartable['mime_subtype'];
     $subtypeId     = $dbconn->genID($subtype_table);
 
     $sql = "INSERT
@@ -69,7 +69,7 @@ function mime_userapi_add_subtype($args)
                  )
             VALUES (?, ?, ?, ?)";
 
-    $bindvars = [$subtypeId, (string)$subtypeName, (int)$typeId, (string)$subtypeDesc];
+    $bindvars = [$subtypeId, (string) $subtypeName, (int) $typeId, (string) $subtypeDesc];
 
     $result = $dbconn->Execute($sql, $bindvars);
 

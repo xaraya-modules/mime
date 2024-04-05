@@ -22,22 +22,22 @@
  *  returns array      An array of (typeId, typeName) or an empty array
  */
 
-function mime_userapi_getall_types($args)
+function mime_userapi_getall_types(array $args = [], $context = null)
 {
     extract($args);
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     // table and column definitions
-    $type_table =& $xartable['mime_type'];
+    $type_table = & $xartable['mime_type'];
 
     if (isset($state) && is_array($state)) {
         $where = 'state in (' . implode(', ', $state) . ')';
     }
     if (isset($state) && !is_array($state)) {
-        $where = 'state = ' . (int)$state;
+        $where = 'state = ' . (int) $state;
     }
     $sql = "SELECT id,
                    name

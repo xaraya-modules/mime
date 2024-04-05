@@ -17,7 +17,7 @@
  */
 sys::import('modules.dynamicdata.class.objects.factory');
 
-function mime_admin_modify()
+function mime_admin_modify(array $args = [], $context = null)
 {
     if (!xarSecurity::check('EditMime')) {
         return;
@@ -56,7 +56,7 @@ function mime_admin_modify()
             $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
 
             // Jump to the next page
-            xarController::redirect(xarController::URL('mime', 'admin', 'view'));
+            xarController::redirect(xarController::URL('mime', 'admin', 'view'), null, $context);
             return true;
         }
     }

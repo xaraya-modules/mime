@@ -21,7 +21,7 @@
  *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
  */
 
-function mime_userapi_getall_magic($args)
+function mime_userapi_getall_magic(array $args = [], $context = null)
 {
     extract($args);
 
@@ -42,10 +42,10 @@ function mime_userapi_getall_magic($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     // table and column definitions
-    $magic_table =& $xartable['mime_magic'];
+    $magic_table = & $xartable['mime_magic'];
 
     $sql = "SELECT subtype_id,
                    id,

@@ -22,7 +22,7 @@
  *  returns array      An array of (typeId, typeName) or an empty array
  */
 
-function mime_userapi_get_type($args)
+function mime_userapi_get_type(array $args = [], $context = null)
 {
     extract($args);
 
@@ -33,18 +33,18 @@ function mime_userapi_get_type($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     $where = ' WHERE ';
 
     if (isset($typeId)) {
         $where .= ' id = ' . $typeId;
     } else {
-        $where .= " name = '".strtolower($typeName)."'";
+        $where .= " name = '" . strtolower($typeName) . "'";
     }
 
     // table and column definitions
-    $type_table =& $xartable['mime_type'];
+    $type_table = & $xartable['mime_type'];
 
     $sql = "SELECT id,
                    name
@@ -59,6 +59,6 @@ function mime_userapi_get_type($args)
 
     $row = $result->GetRowAssoc(false);
 
-    return ['typeId'   => (int)$row['id'],
+    return ['typeId'   => (int) $row['id'],
                  'typeName' => $row['name'], ];
 }

@@ -43,7 +43,7 @@
  *    @access        public
  */
 
-function mime_userapi_array_search_r($args)
+function mime_userapi_array_search_r(array $args = [], $context = null)
 {
     extract($args);
 

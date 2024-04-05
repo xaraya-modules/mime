@@ -21,7 +21,7 @@
  *  returns array      An array of (subtypeId, extension) or an empty array
  */
 
-function mime_userapi_getall_extensions($args)
+function mime_userapi_getall_extensions(array $args = [], $context = null)
 {
     extract($args);
 
@@ -42,10 +42,10 @@ function mime_userapi_getall_extensions($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     // table and column definitions
-    $extension_table =& $xartable['mime_extension'];
+    $extension_table = & $xartable['mime_extension'];
 
     $sql = "SELECT subtype_id,
                    id,

@@ -26,7 +26,7 @@
  *  returns array      An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
  */
 
-function mime_userapi_getall_subtypes($args)
+function mime_userapi_getall_subtypes(array $args = [], $context = null)
 {
     extract($args);
 
@@ -44,12 +44,12 @@ function mime_userapi_getall_subtypes($args)
 
     if (isset($typeId) && is_int($typeId)) {
         $where[] = 'subtype_tab.type_id = ?';
-        $bind[] = (int)$typeId;
+        $bind[] = (int) $typeId;
     }
 
     if (isset($subtypeId) && is_int($subtypeId)) {
         $where[] = 'subtype_tab.id = ?';
-        $bind[] = (int)$subtypeId;
+        $bind[] = (int) $subtypeId;
     }
 
     if (isset($subtypeName) && is_string($subtypeName)) {
@@ -73,16 +73,16 @@ function mime_userapi_getall_subtypes($args)
             $bind[] = implode(', ', $state) ;
         } else {
             $where[] = 'subtype_tab.state = ?';
-            $bind[] = (int)$state;
+            $bind[] = (int) $state;
         }
     }
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
 
     // table and column definitions
-    $subtype_table =& $xartable['mime_subtype'];
-    $type_table =& $xartable['mime_type'];
+    $subtype_table = & $xartable['mime_subtype'];
+    $type_table = & $xartable['mime_type'];
 
     $sql = 'SELECT subtype_tab.type_id AS type_id, subtype_tab.id AS id,'
         . ' subtype_tab.name AS name, subtype_tab.description,'

@@ -22,7 +22,7 @@
  *  returns array      An array of (subtypeId, subtypeName) or an empty array
  */
 
-function mime_userapi_get_mimetype($args)
+function mime_userapi_get_mimetype(array $args = [], $context = null)
 {
     extract($args);
 
@@ -33,19 +33,19 @@ function mime_userapi_get_mimetype($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     $where = ' WHERE ';
 
     if (isset($subtypeId)) {
         $where .= ' xmstype.id = ' . $subtypeId;
     } else {
-        $where .= " xmstype.name = '".strtolower($subtypeName)."'";
+        $where .= " xmstype.name = '" . strtolower($subtypeName) . "'";
     }
 
     // table and column definitions
-    $subtype_table =& $xartable['mime_subtype'];
-    $type_table    =& $xartable['mime_type'];
+    $subtype_table = & $xartable['mime_subtype'];
+    $type_table    = & $xartable['mime_type'];
 
     $sql = "SELECT xmtype.sname AS mimetype,
                    xmstype.name AS mimesubtype

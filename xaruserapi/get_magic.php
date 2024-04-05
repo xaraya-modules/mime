@@ -22,7 +22,7 @@
  *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
  */
 
-function mime_userapi_get_magic($args)
+function mime_userapi_get_magic(array $args = [], $context = null)
 {
     extract($args);
 
@@ -33,18 +33,18 @@ function mime_userapi_get_magic($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     $where = ' WHERE ';
 
     if (isset($magicId)) {
         $where .= ' id = ' . $magicId;
     } else {
-        $where .= " value = '".strtolower($magicValue)."'";
+        $where .= " value = '" . strtolower($magicValue) . "'";
     }
 
     // table and column definitions
-    $magic_table =& $xartable['mime_magic'];
+    $magic_table = & $xartable['mime_magic'];
 
     $sql = "SELECT subtype_id,
                    id,

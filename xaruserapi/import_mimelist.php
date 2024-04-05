@@ -23,7 +23,7 @@
 
 xarMod::apiLoad('mime', 'user');
 
-function mime_userapi_import_mimelist($args)
+function mime_userapi_import_mimelist(array $args = [], $context = null)
 {
     extract($args);
 
@@ -40,7 +40,7 @@ function mime_userapi_import_mimelist($args)
         if (!isset($typeInfo['typeId'])) {
             $typeId = xarMod::apiFunc('mime', 'user', 'add_type', ['typeName' => $mimeType[0]]);
         } else {
-            $typeId =& $typeInfo['typeId'];
+            $typeId = & $typeInfo['typeId'];
         }
 
         $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', ['subtypeName' => $mimeType[1]]);
@@ -56,7 +56,7 @@ function mime_userapi_import_mimelist($args)
                 ]
             );
         } else {
-            $subtypeId =& $subtypeInfo['subtypeId'];
+            $subtypeId = & $subtypeInfo['subtypeId'];
         }
 
         if (isset($mimeInfo['extensions']) && count($mimeInfo['extensions'])) {

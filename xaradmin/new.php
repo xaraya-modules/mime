@@ -17,7 +17,7 @@
  */
 sys::import('modules.dynamicdata.class.objects.factory');
 
-function mime_admin_new()
+function mime_admin_new(array $args = [], $context = null)
 {
     if (!xarSecurity::check('AddMime')) {
         return;
@@ -56,7 +56,7 @@ function mime_admin_new()
             $itemid = $data['object']->createItem();
 
             // Jump to the next page
-            xarController::redirect(xarController::URL('mime', 'admin', 'view'));
+            xarController::redirect(xarController::URL('mime', 'admin', 'view'), null, $context);
             return true;
         }
     }

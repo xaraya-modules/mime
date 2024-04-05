@@ -21,13 +21,13 @@
  *  returns array      An array of (typeId, typeName) or an empty array
  */
 
-function mime_userapi_add_type($args)
+function mime_userapi_add_type(array $args = [], $context = null)
 {
     extract($args);
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     if (!isset($typeName) || empty($typeName)) {
         $msg = xarML(
@@ -40,7 +40,7 @@ function mime_userapi_add_type($args)
     }
 
     // table and column definitions
-    $type_table =& $xartable['mime_type'];
+    $type_table = & $xartable['mime_type'];
     $typeId = $dbconn->genID($type_table);
 
     $sql = "INSERT

@@ -23,7 +23,7 @@
  * @param   string      $mime_type MIME type to be mapped to a file extension.
  * @return  string      The file extension of the MIME type.
  */
-function mime_userapi_mime_to_extension($args)
+function mime_userapi_mime_to_extension(array $args = [], $context = null)
 {
     extract($args);
 
@@ -38,7 +38,7 @@ function mime_userapi_mime_to_extension($args)
         throw new Exception($msg);
     }
 
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
     $q->addtable($xartable['mime_type'], 'mt');

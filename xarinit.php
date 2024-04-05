@@ -25,34 +25,34 @@ function mime_init()
     sys::import('xaraya.tableddl');
 
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
 
     $fields['mime_type'] = [
         'id'          => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
-        'name'        => ['type'=>'varchar',  'null'=>false,  'size'=>255],
+        'name'        => ['type' => 'varchar',  'null' => false,  'size' => 255],
         'state'       => ['type' => 'integer', 'null' => false, 'default' => 3],
     ];
 
     $fields['mime_subtype'] = [
         'id'            => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
-        'name'          => ['type'=>'varchar',  'null'=>false,  'size'=>255],
-        'type_id'       => ['type'=>'integer',  'null'=>false],
-        'description'   => ['type'=>'varchar',  'null'=>true,  'size'=>255],
+        'name'          => ['type' => 'varchar',  'null' => false,  'size' => 255],
+        'type_id'       => ['type' => 'integer',  'null' => false],
+        'description'   => ['type' => 'varchar',  'null' => true,  'size' => 255],
         'state'         => ['type' => 'integer', 'null' => false, 'default' => 3],
     ];
 
     $fields['mime_extension'] = [
         'id'            => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
-        'subtype_id'    => ['type'=>'integer',  'null'=>false],
-        'name'          => ['type'=>'varchar',  'null'=>false,  'size'=>10],
+        'subtype_id'    => ['type' => 'integer',  'null' => false],
+        'name'          => ['type' => 'varchar',  'null' => false,  'size' => 10],
     ];
 
     $fields['mime_magic'] = [
         'id'         => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
-        'subtype_id' => ['type'=>'integer',  'null'=>false],
-        'value'      => ['type'=>'varchar',  'null'=>false, 'size'=>255],
-        'length'     => ['type'=>'integer',  'null'=>false],
-        'offset'     => ['type'=>'integer',  'null'=>false],
+        'subtype_id' => ['type' => 'integer',  'null' => false],
+        'value'      => ['type' => 'varchar',  'null' => false, 'size' => 255],
+        'length'     => ['type' => 'integer',  'null' => false],
+        'offset'     => ['type' => 'integer',  'null' => false],
     ];
 
     // Create all the tables and, if there are errors
@@ -127,8 +127,8 @@ function mime_init()
     #
     # Set up modvars
     #
-//        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'mime'));
-//        $module_settings->initialize();
+    //        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'mime'));
+    //        $module_settings->initialize();
 
     xarModVars::set('mime', 'defaultmastertable', 'mime_types');
 
@@ -143,7 +143,7 @@ function mime_upgrade($oldversion)
 {
     // Set up database objects
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     $datadict = xarTableDDL::init($dbconn, 'ALTERTABLE');
 
     // Upgrade dependent on old version number

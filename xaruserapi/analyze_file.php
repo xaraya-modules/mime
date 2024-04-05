@@ -26,7 +26,7 @@
  *                 it will try to guess one of either text/plain or
  *                 application/octet-stream by reading the first 256 bytes of the file
  */
-function mime_userapi_analyze_file($args)
+function mime_userapi_analyze_file(array $args = [], $context = null)
 {
     extract($args);
 

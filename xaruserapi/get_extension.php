@@ -22,7 +22,7 @@
  *  returns array      An array of (subtypeId, extension) or an empty array
  */
 
-function mime_userapi_get_extension($args)
+function mime_userapi_get_extension(array $args = [], $context = null)
 {
     extract($args);
 
@@ -33,18 +33,18 @@ function mime_userapi_get_extension($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     $where = ' WHERE ';
 
     if (isset($extensionId)) {
         $where .= ' id = ' . $extensionId;
     } else {
-        $where .= " name = '".strtolower($extensionName)."'";
+        $where .= " name = '" . strtolower($extensionName) . "'";
     }
 
     // table and column definitions
-    $extension_table =& $xartable['mime_extension'];
+    $extension_table = & $xartable['mime_extension'];
 
     $sql = "SELECT subtype_id,
                    id,

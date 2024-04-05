@@ -21,7 +21,7 @@
  *  returns array      An array of (subtypeId, subtypeName) or an empty array
  */
 
-function mime_userapi_get_rev_mimetype($args)
+function mime_userapi_get_rev_mimetype(array $args = [], $context = null)
 {
     extract($args);
 
@@ -43,7 +43,7 @@ function mime_userapi_get_rev_mimetype($args)
         // if not found return 0 for the id of both type / subtype
         return ['typeId' => 0, 'subtypeId' => 0];
     } else {
-        $typeId =& $typeInfo['typeId'];
+        $typeId = & $typeInfo['typeId'];
     }
 
     $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', ['subtypeName' => $mimeType[1]]);

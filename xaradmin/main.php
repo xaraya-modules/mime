@@ -16,9 +16,9 @@
  *
  */
 
-function mime_admin_main()
+function mime_admin_main(array $args = [], $context = null)
 {
-    xarController::redirect(xarController::URL('mime', 'admin', 'view'));
+    xarController::redirect(xarController::URL('mime', 'admin', 'view'), null, $context);
 
     if (!xarSecurity::check('ManageMime')) {
         return;
@@ -27,7 +27,7 @@ function mime_admin_main()
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return [];
     } else {
-        xarController::redirect(xarController::URL('mime', 'admin', 'view'));
+        xarController::redirect(xarController::URL('mime', 'admin', 'view'), null, $context);
     }
     // success
     return true;

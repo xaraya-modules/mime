@@ -22,7 +22,7 @@
  *  returns array      An array of (subtypeId, extension) or an empty array
  */
 
-function mime_userapi_add_extension($args)
+function mime_userapi_add_extension(array $args = [], $context = null)
 {
     extract($args);
 
@@ -48,10 +48,10 @@ function mime_userapi_add_extension($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
+    $xartable     = & xarDB::getTables();
 
     // table and column definitions
-    $extension_table =& $xartable['mime_extension'];
+    $extension_table = & $xartable['mime_extension'];
     $extensionId     = $dbconn->genID($extension_table);
 
     $sql = "INSERT

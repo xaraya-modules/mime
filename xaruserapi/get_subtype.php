@@ -23,7 +23,7 @@
  *  returns array      An array of (subtypeId, subtypeName) or an empty array
  */
 
-function mime_userapi_get_subtype($args)
+function mime_userapi_get_subtype(array $args = [], $context = null)
 {
     // Farm the query off.
     // No need to duplicate the database query here.

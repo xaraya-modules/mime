@@ -15,7 +15,7 @@
  * View items of the mime objects
  *
  */
-function mime_admin_view($args)
+function mime_admin_view(array $args = [], $context = null)
 {
     if (!xarSecurity::check('ManageMime')) {
         return;
