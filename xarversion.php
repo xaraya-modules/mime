@@ -28,3 +28,11 @@ $modversion['user']           = false;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
 $modversion['securityschema'] = [];
+//$modversion['namespace']      = 'Xaraya\Modules\Mime';
+$modversion['twigtemplates']  = true;
+$modversion['dependencyinfo'] = [
+    0 => [
+        'name' => 'Xaraya Core',
+        'version_ge' => '2.4.1',
+    ],
+];
