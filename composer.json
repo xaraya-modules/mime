@@ -4,9 +4,10 @@
     "description": "Hook based module that returns the content-type of a given file.",
     "homepage": "https://github.com/xaraya-modules/mime",
     "license": "GPL-2.0-or-later",
-    "require": {},
+    "require": {
+        "league/mime-type-detection": "^1.15"
+    },
     "autoload": {
-        "classmap": ["./"],
-        "exclude-from-classmap": ["/vendor/"]
+        "classmap": ["./"]
     }
 }
