@@ -14,6 +14,8 @@ namespace Xaraya\Modules\Mime;
 
 use Xaraya\DataObject\Traits\UserApiInterface;
 use Xaraya\DataObject\Traits\UserApiTrait;
+use DataObjectFactory;
+use DataObjectList;
 use sys;
 
 sys::import('modules.dynamicdata.class.traits.userapi');
@@ -25,7 +27,7 @@ class UserApi implements UserApiInterface
 {
     use UserApiTrait;
 
-    protected static string $moduleName = 'mime';
+    public static string $moduleName = 'mime';
     protected static int $moduleId = 999;
     protected static int $itemtype = 0;
     protected static MimeTypeDetector $detector;
@@ -41,5 +43,81 @@ class UserApi implements UserApiInterface
             static::$detector = new MimeTypeDetector();
         }
         return static::$detector;
+    }
+
+    /**
+     * Summary of checkFileType
+     * @param string $filePath
+     * @return string|null
+     */
+    public static function checkFileType($filePath)
+    {
+        return static::getDetector()->checkFileType($filePath);
+    }
+
+    /**
+     * Summary of getMimeType
+     * @param string $mimeType
+     * @return string|null
+     */
+    public static function getExtension($mimeType)
+    {
+        return static::getDetector()->getExtension($mimeType);
+    }
+
+    /**
+     * Summary of getMimeTypes
+     * @param array<string, mixed> $args
+     * @param mixed $context
+     * @return DataObjectList|null
+     */
+    public static function getMimeTypes($args = [], $context = null)
+    {
+        // @todo apply where clauses if relevant
+        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_types'], $context);
+        $objectlist->getItems();
+        return $objectlist;
+    }
+
+    /**
+     * Summary of getSubTypes
+     * @param array<string, mixed> $args
+     * @param mixed $context
+     * @return DataObjectList|null
+     */
+    public static function getSubTypes($args = [], $context = null)
+    {
+        // @todo apply where clauses if relevant
+        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_subtypes'], $context);
+        $objectlist->getItems();
+        return $objectlist;
+    }
+
+    /**
+     * Summary of getExtensions
+     * @param array<string, mixed> $args
+     * @param mixed $context
+     * @return DataObjectList|null
+     */
+    public static function getExtensions($args = [], $context = null)
+    {
+        // @todo apply where clauses if relevant
+        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_extensions'], $context);
+        $objectlist->getItems();
+        return $objectlist;
+    }
+
+    /**
+     * Summary of getMagic
+     * @param array<string, mixed> $args
+     * @param mixed $context
+     * @return DataObjectList|null
+     */
+    public static function getMagic($args = [], $context = null)
+    {
+        // @todo apply where clauses if relevant
+        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_magic'], $context);
+        $objectlist->getItems();
+        return $objectlist;
     }
 }

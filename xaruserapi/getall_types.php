@@ -11,60 +11,38 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
+sys::import('modules.mime.class.userapi');
+use Xaraya\Modules\Mime\UserApi;
 
 /**
  *  Get all mime types
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    typeId    the ID of the mime type to lookup   (optional)
- *  @param  integer    typeName  the Name of the mime type to lookup (optional)
- *  returns array      An array of (typeId, typeName) or an empty array
+ * @param array $args
+ * with
+ *     integer    state    the state of the mime type to lookup   (optional)
+ * @uses UserApi::getMimeTypes()
+ * @return array      An array of (typeId, typeName) or an empty array
  */
-
 function mime_userapi_getall_types(array $args = [], $context = null)
 {
     extract($args);
 
-    // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable     = & xarDB::getTables();
-
-    // table and column definitions
-    $type_table = & $xartable['mime_type'];
-
+    // @todo apply where clauses if relevant
     if (isset($state) && is_array($state)) {
-        $where = 'state in (' . implode(', ', $state) . ')';
+        $args['where'] = 'state in (' . implode(', ', $state) . ')';
     }
     if (isset($state) && !is_array($state)) {
-        $where = 'state = ' . (int) $state;
+        $args['where'] = 'state = ' . (int) $state;
     }
-    $sql = "SELECT id,
-                   name
-              FROM $type_table";
-    $sql .= (isset($where) ? ' WHERE ' . $where : '');
-    $sql .=   " ORDER BY name";
+    $objectlist = UserApi::getMimeTypes($args, $context);
 
-    $result = $dbconn->Execute($sql);
-
-    if (!$result) {
-        return [];
+    $typeInfo = [];
+    foreach ($objectlist->items as $itemid => $item) {
+        $typeInfo[$item['id']] = [
+            'typeId'   => $item['id'],
+            'typeName' => $item['name'],
+        ];
     }
 
-    // if no record found, return an empty array
-    if ($result->EOF) {
-        return [];
-    }
-
-    while (!$result->EOF) {
-        $row = $result->GetRowAssoc(false);
-
-        $typeInfo[$row['id']]['typeId'] = $row['id'];
-        $typeInfo[$row['id']]['typeName'] = $row['name'];
-
-        $result->MoveNext();
-    }
-
-    $result->Close();
     return $typeInfo;
 }

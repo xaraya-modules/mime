@@ -11,20 +11,24 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
+sys::import('modules.mime.class.userapi');
+use Xaraya\Modules\Mime\UserApi;
 
 /**
  *  Get the magic number(s) for a particular mime subtype
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    subtypeId   the magicId of the magic # to lookup   (optional)788888888888888888888890
- *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
+ * @param array $args
+ * with
+ *     integer    subtypeId   the magicId of the magic # to lookup   (optional)788888888888888888888890
+ * @uses UserApi::getExtensions()
+ * @return array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
  */
 
 function mime_userapi_getall_magic(array $args = [], $context = null)
 {
     extract($args);
 
+    // @todo apply where clauses if relevant
     if (isset($subtypeId)) {
         if (is_int($subtypeId)) {
             $where = " WHERE subtype_id = $subtypeId";
@@ -39,42 +43,18 @@ function mime_userapi_getall_magic(array $args = [], $context = null)
     } else {
         $where = '';
     }
+    $objectlist = UserApi::getMagic($args, $context);
 
-    // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable     = & xarDB::getTables();
-
-    // table and column definitions
-    $magic_table = & $xartable['mime_magic'];
-
-    $sql = "SELECT subtype_id,
-                   id,
-                   value,
-                   offset,
-                   length
-              FROM $magic_table
-            $where
-          ORDER BY subtype_id,
-                   offset";
-
-    $result = $dbconn->Execute($sql);
-
-    if (!$result | $result->EOF) {
-        return [];
+    $magicInfo = [];
+    foreach ($objectlist->items as $itemid => $item) {
+        $magicInfo[$item['id']] = [
+            'magicId'     => $item['id'],
+            'subtypeId'   => $item['subtype_id'],
+            'magicValue'  => $item['value'],
+            'magicOffset' => $item['offset'],
+            'magicLength' => $item['length'],
+        ];
     }
 
-    while (!$result->EOF) {
-        $row = $result->GetRowAssoc(false);
-
-        $subtypeInfo[$row['id']]['magicId']     = $row['id'];
-        $subtypeInfo[$row['id']]['subtypeId']   = $row['subtype_id'];
-        $subtypeInfo[$row['id']]['magicValue']  = $row['value'];
-        $subtypeInfo[$row['id']]['magicOffset'] = $row['offset'];
-        $subtypeInfo[$row['id']]['magicLength'] = $row['length'];
-
-        $result->MoveNext();
-    }
-    $result->Close();
-
-    return $subtypeInfo;
+    return $magicInfo;
 }

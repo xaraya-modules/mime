@@ -6,6 +6,6 @@
         <form method="post" action="{{ xar_currenturl() }}" style="margin-top: 10px; margin-bottom: 10px;">
             Choose an object:&#160;{{ xar_data_input({type: "dropdown", name: "objectname", value: objectname, options: options, onchange: "javascript:submit()"}) }}
         </form>
-        {{ xar_data_input({type: "listing", objectname: objectname, tplmodule: "mime"}) }}
+        {{ xar_data_input({type: "listing", object: object, items: object.items, tplmodule: "mime"}) }}
     </div>
 {% endblock %}

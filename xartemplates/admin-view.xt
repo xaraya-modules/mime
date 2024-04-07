@@ -5,6 +5,6 @@
         <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
             Choose an object:&#160;<xar:data-input type="dropdown" name="objectname" value="$objectname" options="$options" onchange="javascript:submit()"/>
         </form>
-        <xar:data-input type="listing" objectname="$objectname" tplmodule="mime"/>
+        <xar:data-input type="listing" object="$object" items="$object->items" tplmodule="mime"/>
     </div>
 </xar:template>

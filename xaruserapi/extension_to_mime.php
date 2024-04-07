@@ -19,11 +19,10 @@
  *
  * Based on the Magic class for horde (www.horde.org)
  *
- * @access public
- * @author Carl P. Corliss
- * @param string $fileName  Filename to grab fileName and check for mimetype for..
- *
- * @return string||boolean  mime-type or FALSE with exception on error, FALSE and no exception if unknown mime-type
+ * @param array $args
+ * with
+ *     string $fileName  Filename to grab fileName and check for mimetype for..
+ * @return string|boolean  mime-type or FALSE with exception on error, FALSE and no exception if unknown mime-type
  */
 function mime_userapi_extension_to_mime(array $args = [], $context = null)
 {
@@ -36,34 +35,34 @@ function mime_userapi_extension_to_mime(array $args = [], $context = null)
 
     if (empty($fileName)) {
         return 'application/octet-stream';
-    } else {
-        $fileName = strtolower($fileName);
-        $parts = explode('.', $fileName);
-
-        // if there is only one part, then there was no '.'
-        // seperator, hence no extension. So we fallback
-        // to analyze_file()
-        if (count($parts) > 1) {
-            $extension = $parts[count($parts) - 1];
-            $extensionInfo = xarMod::apiFunc(
-                'mime',
-                'user',
-                'get_extension',
-                ['extensionName' => $extension]
-            );
-            if (!empty($extensionInfo)) {
-                $mimeType = xarMod::apiFunc(
-                    'mime',
-                    'user',
-                    'get_mimetype',
-                    ['subtypeId' => $extensionInfo['subtypeId']]
-                );
-                if (!empty($mimeType)) {
-                    return $mimeType;
-                }
-            }
-        } else {
-            return 'application/octet-stream';
-        }
     }
+    $fileName = strtolower($fileName);
+    $parts = explode('.', $fileName);
+
+    // if there is only one part, then there was no '.'
+    // seperator, hence no extension. So we fallback
+    // to analyze_file()
+    if (count($parts) < 2) {
+        return 'application/octet-stream';
+    }
+    $extension = $parts[count($parts) - 1];
+    $extensionInfo = xarMod::apiFunc(
+        'mime',
+        'user',
+        'get_extension',
+        ['extensionName' => $extension]
+    );
+    if (empty($extensionInfo)) {
+        return 'application/octet-stream';
+    }
+    $mimeType = xarMod::apiFunc(
+        'mime',
+        'user',
+        'get_mimetype',
+        ['subtypeId' => $extensionInfo['subtypeId']]
+    );
+    if (!empty($mimeType)) {
+        return $mimeType;
+    }
+    return 'application/octet-stream';
 }

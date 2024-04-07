@@ -26,7 +26,7 @@ class MimeTypeDetector
 
     public function __construct() {}
 
-    public function analyzeFile(string $path)
+    public function checkFileType(string $path)
     {
         if (is_file($path)) {
             if (filesize($path) > 100000) {
@@ -49,7 +49,7 @@ class MimeTypeDetector
      * @todo check with getimagesize() or imagecreatefrom...
      * @see comment at https://www.php.net/manual/en/function.finfo-file.php
      */
-    public function checkImageFile(string $path)
+    public function checkImageType(string $path)
     {
         // ...
         return true;

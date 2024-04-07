@@ -11,25 +11,27 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
+sys::import('modules.mime.class.userapi');
+use Xaraya\Modules\Mime\UserApi;
 
 /**
  *  Get details for mime subtypes
  *
- *  @author Carl P. Corliss
- *  @author Jason Judge
- *  @access public
- *  @param  integer    typeId the type ID of the mime type to grab subtypes for
- *  @param  integer    subtypeId the subtype ID of the mime type, which should fetch just one subtype
- *  @param  string     subtypeName the subtype name of the mime type, which should fetch just one subtype
- *  @param  string     typeName the type name of the mime type
- *  @param  string     mimeName the full two-part mime name
- *  returns array      An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
+ * @param array $args
+ * with
+ *     integer    typeId the type ID of the mime type to grab subtypes for
+ *     integer    subtypeId the subtype ID of the mime type, which should fetch just one subtype
+ *     string     subtypeName the subtype name of the mime type, which should fetch just one subtype
+ *     string     typeName the type name of the mime type
+ *     string     mimeName the full two-part mime name
+ * @uses UserApi::getSubTypes()
+ * @return array      An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
  */
-
 function mime_userapi_getall_subtypes(array $args = [], $context = null)
 {
     extract($args);
 
+    // @todo apply where clauses if relevant
     $where = [];
     $bind = [];
 
@@ -76,42 +78,25 @@ function mime_userapi_getall_subtypes(array $args = [], $context = null)
             $bind[] = (int) $state;
         }
     }
-    // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable = & xarDB::getTables();
-
-    // table and column definitions
-    $subtype_table = & $xartable['mime_subtype'];
-    $type_table = & $xartable['mime_type'];
-
-    $sql = 'SELECT subtype_tab.type_id AS type_id, subtype_tab.id AS id,'
-        . ' subtype_tab.name AS name, subtype_tab.description,'
-        . ' type_tab.name AS type_name'
-        . ' FROM ' . $subtype_table . ' subtype_tab'
-        . ' INNER JOIN ' . $type_table . ' type_tab ON type_tab.id = subtype_tab.type_id'
-        . (!empty($where) ? ' WHERE ' . implode(' AND ', $where) : '')
-        . ' ORDER BY subtype_tab.type_id, subtype_tab.name ASC';
-
-    $result = $dbconn->Execute($sql, $bind);
-
-    // Return NULL in the event of an error.
-    if (!$result) {
-        return;
-    }
+    $objectlist = UserApi::getSubTypes($args, $context);
+    // get type_id and type_name here too
+    $typelist = static::getMimeTypes([], $context);
+    $mimetypes = $typelist->items;
 
     $subtypeInfo = [];
-    while (!$result->EOF) {
-        $row = $result->GetRowAssoc(false);
-
-        $subtypeInfo[$row['id']]['subtypeId']      = $row['id'];
-        $subtypeInfo[$row['id']]['subtypeName']    = $row['name'];
-        $subtypeInfo[$row['id']]['subtypeDesc']    = $row['description'];
-        $subtypeInfo[$row['id']]['typeId']         = $row['type_id'];
-        $subtypeInfo[$row['id']]['typeName']       = $row['type_name'];
-
-        $result->MoveNext();
+    foreach ($objectlist->items as $itemid => $item) {
+        $mimetype = [];
+        if (!empty($item['type']) && !empty($mimetypes[$item['type']])) {
+            $mimetype = $mimetypes[$item['type']];
+        }
+        $subtypeInfo[$item['id']] = [
+            'subtypeId'   => $item['id'],
+            'subtypeName' => $item['name'],
+            'subtypeDesc' => $item['description'],
+            'typeId'      => $mimetype['id'] ?? $item['type'],
+            'typeName'    => $mimetype['name'] ?? '',
+        ];
     }
-    $result->Close();
 
     return $subtypeInfo;
 }

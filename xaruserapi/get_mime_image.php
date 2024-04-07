@@ -17,14 +17,13 @@
  * If no image file exists for the given mimtype, the unknown image file
  * will be used.
  *
- * @author  Carl P. Corliss
- * @access  public
- * @param   string mimeType     The mime type to find a correlating image for
- * @param   string fileSuffix   Image file suffix list (default: '.png')
- * @param   string defaultBase  Default file base name (default: 'default')
+ * @param array $args
+ * with
+ *     string mimeType     The mime type to find a correlating image for
+ *     string fileSuffix   Image file suffix list (default: '.png')
+ *     string defaultBase  Default file base name (default: 'default')
  * @return string
  */
-
 function mime_userapi_get_mime_image(array $args = [], $context = null)
 {
     extract($args);

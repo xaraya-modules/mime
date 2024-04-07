@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'mime';
 $modversion['id']             = '999';
-$modversion['version']        = '1.5.0';
+$modversion['version']        = '1.7.0';
 $modversion['displayname']    = xarML('Mime');
 $modversion['description']    = 'Hook based module that returns the content-type of a given file.';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -29,7 +29,7 @@ $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
 $modversion['securityschema'] = [];
 //$modversion['namespace']      = 'Xaraya\Modules\Mime';
-$modversion['twigtemplates']  = true;
+$modversion['twigtemplates']  = false;
 $modversion['dependencyinfo'] = [
     0 => [
         'name' => 'Xaraya Core',

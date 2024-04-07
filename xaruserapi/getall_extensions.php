@@ -11,20 +11,23 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
+sys::import('modules.mime.class.userapi');
+use Xaraya\Modules\Mime\UserApi;
 
 /**
  *  Get the name of a mime type
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    subtypeId       the subtype ID of the type to grab extensions for
- *  returns array      An array of (subtypeId, extension) or an empty array
+ * @param array $args
+ * with
+ *     integer    subtypeId       the subtype ID of the type to grab extensions for
+ * @uses UserApi::getExtensions()
+ * @return array      An array of (subtypeId, extension) or an empty array
  */
-
 function mime_userapi_getall_extensions(array $args = [], $context = null)
 {
     extract($args);
 
+    // @todo apply where clauses if relevant
     if (isset($subtypeId)) {
         if (is_int($subtypeId)) {
             $where = " WHERE subtype_id = $subtypeId";
@@ -39,37 +42,15 @@ function mime_userapi_getall_extensions(array $args = [], $context = null)
     } else {
         $where = '';
     }
+    $objectlist = UserApi::getExtensions($args, $context);
 
-    // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable     = & xarDB::getTables();
-
-    // table and column definitions
-    $extension_table = & $xartable['mime_extension'];
-
-    $sql = "SELECT subtype_id,
-                   id,
-                   name
-              FROM $extension_table
-            $where
-          ORDER BY subtype_id,
-                   name";
-
-    $result = $dbconn->Execute($sql);
-
-    if (!$result | $result->EOF) {
-        return [];
+    $extensionInfo = [];
+    foreach ($objectlist->items as $itemid => $item) {
+        $extensionInfo[$item['id']] = [
+            'extensionId'   => $item['id'],
+            'extensionName' => $item['name'],
+        ];
     }
 
-    while (!$result->EOF) {
-        $row = $result->GetRowAssoc(false);
-
-        $subtypeInfo[$row['id']]['extensionId']   = $row['id'];
-        $subtypeInfo[$row['id']]['extensionName'] = $row['name'];
-
-        $result->MoveNext();
-    }
-    $result->Close();
-
-    return $subtypeInfo;
+    return $extensionInfo;
 }

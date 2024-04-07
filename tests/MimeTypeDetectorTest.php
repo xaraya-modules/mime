@@ -9,29 +9,23 @@ use Xaraya\Modules\Mime\MimeTypeDetector;
 
 final class MimeTypeDetectorTest extends TestCase
 {
-    public static function noSetUpBeforeClass(): void
+    protected static $oldDir;
+
+    public static function setUpBeforeClass(): void
     {
-        // initialize bootstrap
-        sys::init();
-        // initialize caching - delay until we need results
-        xarCache::init();
-        // initialize loggers
-        xarLog::init();
-        // initialize database - delay until caching fails
-        xarDatabase::init();
-        // initialize modules
-        //xarMod::init();
-        // initialize users
-        //xarUser::init();
-        xarSession::setSessionClass(SessionContext::class);
+        // file paths are relative to parent directory
+        static::$oldDir = getcwd();
+        chdir(dirname(__DIR__));
     }
 
-    public static function tearDownAfterClass(): void {}
+    public static function tearDownAfterClass(): void
+    {
+        chdir(static::$oldDir);
+    }
 
     protected function setUp(): void {}
 
     protected function tearDown(): void {}
-
 
     public function testMimeTypeDetector(): void
     {
@@ -43,7 +37,7 @@ final class MimeTypeDetectorTest extends TestCase
     /**
      * Expected file results based on content & extension
      */
-    public static function expectedFileResults()
+    public static function provideFileResults()
     {
         return [
             'php' => ['xarversion.php', 'text/x-php', 'application/x-httpd-php'],
@@ -58,12 +52,12 @@ final class MimeTypeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider expectedFileResults
+     * @dataProvider provideFileResults
      */
-    public function testAnalyzeFile(string $path, ?string $expectedContent, ?string $expectedExtension): void
+    public function testCheckFileType(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
         $detector = new MimeTypeDetector();
-        $mimeType = $detector->analyzeFile($path);
+        $mimeType = $detector->checkFileType($path);
 
         // careful about inconclusive mime types, see FinfoMimeTypeDetector::INCONCLUSIVE_MIME_TYPES
         if ($expectedContent == 'text/plain') {
@@ -74,7 +68,7 @@ final class MimeTypeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider expectedFileResults
+     * @dataProvider provideFileResults
      */
     public function testGetMimeType(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
@@ -87,20 +81,20 @@ final class MimeTypeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider expectedFileResults
+     * @dataProvider provideFileResults
      */
-    public function testGetExtension(string $path, ?string $expectedContent, ?string $expectedExtension): void
+    public function testGetExtension(string $path, ?string $mimeTypeContent, ?string $mimeTypeExtension): void
     {
-        $mimeType = $expectedExtension ?? $expectedContent;
+        $mimeType = $mimeTypeExtension ?? $mimeTypeContent;
         $detector = new MimeTypeDetector();
         $extension = $detector->getExtension($mimeType);
 
         // @todo unsupported extensions .xt and .*.twig
+        $expected = pathinfo($path, PATHINFO_EXTENSION);
         $unknown = [
             'xt' => 'xml',
             'twig' => 'txt',
         ];
-        $expected = pathinfo($path, PATHINFO_EXTENSION);
         if (!empty($unknown[$expected])) {
             $expected = $unknown[$expected];
         }
@@ -108,7 +102,7 @@ final class MimeTypeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider expectedFileResults
+     * @dataProvider provideFileResults
      */
     public function testFinfoMimeTypeDetector(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
@@ -127,7 +121,7 @@ final class MimeTypeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider expectedFileResults
+     * @dataProvider provideFileResults
      */
     public function testFinfoMimeTypeDetectorBuffer(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
@@ -140,7 +134,7 @@ final class MimeTypeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider expectedFileResults
+     * @dataProvider provideFileResults
      */
     public function testFinfoMimeTypeDetectorFile(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
@@ -153,7 +147,7 @@ final class MimeTypeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider expectedFileResults
+     * @dataProvider provideFileResults
      */
     public function testFinfoMimeTypeDetectorPath(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
@@ -166,7 +160,7 @@ final class MimeTypeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider expectedFileResults
+     * @dataProvider provideFileResults
      */
     public function testExtensionMimeTypeDetector(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
