@@ -2,11 +2,11 @@
   <objectid>20</objectid>
   <label>Mime Types</label>
   <module_id>999</module_id>
-  <itemtype>15</itemtype>
+  <itemtype>1</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>11</maxid>
+  <maxid>0</maxid>
   <access>a:0:{}</access>
   <isalias>true</isalias>
   <datastore>dynamicdata</datastore>

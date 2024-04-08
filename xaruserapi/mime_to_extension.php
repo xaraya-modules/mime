@@ -18,10 +18,10 @@
  *
  * Code originally based on hordes Magic class (www.horde.org)
  *
- * @author  Carl P. Corliss
- * @access  public
- * @param   string      $mime_type MIME type to be mapped to a file extension.
- * @return  string      The file extension of the MIME type.
+ * @param array $args
+ * with
+ *     string $mime_type MIME type to be mapped to a file extension.
+ * @return  string The file extension of the MIME type.
  */
 function mime_userapi_mime_to_extension(array $args = [], $context = null)
 {
@@ -38,23 +38,24 @@ function mime_userapi_mime_to_extension(array $args = [], $context = null)
         throw new Exception($msg);
     }
 
-    $xartable = & xarDB::getTables();
-    sys::import('xaraya.structures.query');
-    $q = new Query();
-    $q->addtable($xartable['mime_type'], 'mt');
-    $q->addtable($xartable['mime_subtype'], 'mst');
-    $q->addtable($xartable['mime_extension'], 'me');
-    $q->join('mt.id', 'mst.type_id');
-    $q->join('mst.id', 'me.subtype_id');
-    $q->eq('mt.name', $typeparts[0]);
-    $q->eq('mst.name', $typeparts[1]);
-
-    $q->addfield('mt.name AS type_name');
-    $q->addfield('mst.name AS subtype_name');
-    $q->addfield('me.name AS extension');
-    if (!$q->run()) {
-        return;
+    $args = [
+        'typeName' => $typeparts[0],
+        'subtypeName' => $typeparts[1],
+    ];
+    $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', $args);
+    if (empty($subtypeInfo)) {
+        return '';
     }
 
-    return $q->output();
+    $args = [
+        'subtypeId' => $subtypeInfo['subtypeId'],
+    ];
+    $extensions = xarMod::apiFunc('mime', 'user', 'getall_extensions', $args);
+    // @todo what if we have more than 1 extension?
+    $extensionInfo = reset($extensions);
+    if (empty($extensionInfo)) {
+        return '';
+    }
+
+    return $extensionInfo['extensionName'];
 }

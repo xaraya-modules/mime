@@ -13,16 +13,16 @@
  */
 
 /**
- *  Get the name of a mime type
+ *  Get the name of a mime subtype
  *
- *  @author Carl P. Corliss
- *  @author Jason Judge
- *  @access public
- *  @param  integer    subtypeId   the subtypeID of the mime subtype to lookup (optional)
- *  @param  integer    subtypeName the Name of the mime sub type to lookup (optional)
- *  returns array      An array of (subtypeId, subtypeName) or an empty array
+ * @param array $args
+ * with
+ *     integer    subtypeId   the subtypeID of the mime subtype to lookup (optional)
+ *     string     subtypeName the Name of the mime sub type to lookup (optional)
+ *     string     typeName the type name of the mime type
+ *     string     mimeName the full two-part mime name
+ * @return array      An array of (subtypeId, subtypeName) or an empty array
  */
-
 function mime_userapi_get_subtype(array $args = [], $context = null)
 {
     // Farm the query off.
@@ -36,8 +36,8 @@ function mime_userapi_get_subtype(array $args = [], $context = null)
 
     if (count($subtypes) > 1) {
         // Too many matches.
-        // TODO: perhaps raise an error?
-        return;
+        $msg = xarML('Too many matches to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_subtype');
+        throw new Exception($msg);
     }
 
     // There is a single subtype element - return just that element.

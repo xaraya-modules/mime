@@ -31,10 +31,6 @@ function mime_userapi_getall_subtypes(array $args = [], $context = null)
 {
     extract($args);
 
-    // @todo apply where clauses if relevant
-    $where = [];
-    $bind = [];
-
     // The complete mime name can be passed in (type/subtype) and this
     // will be split up here for convenience.
     if (isset($mimeName) && is_string($mimeName)) {
@@ -44,44 +40,44 @@ function mime_userapi_getall_subtypes(array $args = [], $context = null)
         }
     }
 
+    // get type_id and type_name here too
+    $typelist = UserApi::getMimeTypes([], $context);
+    $mimetypes = $typelist->items;
+
+    // apply where clauses if relevant
+    $args['where'] = [];
+
     if (isset($typeId) && is_int($typeId)) {
-        $where[] = 'subtype_tab.type_id = ?';
-        $bind[] = (int) $typeId;
+        $args['where']['type'] = (int) $typeId;
+        unset($args['typeId']);
     }
 
     if (isset($subtypeId) && is_int($subtypeId)) {
-        $where[] = 'subtype_tab.id = ?';
-        $bind[] = (int) $subtypeId;
+        $args['where']['id'] = (int) $subtypeId;
+        unset($args['subtypeId']);
     }
 
     if (isset($subtypeName) && is_string($subtypeName)) {
-        $where[] = 'subtype_tab.name = ?';
-        $bind[] = strtolower($subtypeName);
+        $args['where']['name'] = strtolower($subtypeName);
+        unset($args['subtypeName']);
     }
 
     if (isset($typeName) && is_string($typeName)) {
-        $where[] = 'type_tab.name = ?';
-        $bind[] = strtolower($typeName);
-    }
-
-    if (isset($typeName) && is_string($typeName)) {
-        $where[] = 'type_tab.name = ?';
-        $bind[] = strtolower($typeName);
+        // look up type id here first
+        foreach ($mimetypes as $type => $mimetype) {
+            if ($typeName == $mimetype['name']) {
+                $args['where']['type'] = (int) $mimetype['id'];
+                break;
+            }
+        }
+        unset($args['typeName']);
     }
 
     if (isset($state)) {
-        if (is_array($state)) {
-            $where[] = 'subtype_tab.state in (?)';
-            $bind[] = implode(', ', $state) ;
-        } else {
-            $where[] = 'subtype_tab.state = ?';
-            $bind[] = (int) $state;
-        }
+        $args['where']['state'] = $state;
+        unset($args['state']);
     }
     $objectlist = UserApi::getSubTypes($args, $context);
-    // get type_id and type_name here too
-    $typelist = static::getMimeTypes([], $context);
-    $mimetypes = $typelist->items;
 
     $subtypeInfo = [];
     foreach ($objectlist->items as $itemid => $item) {

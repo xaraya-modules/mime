@@ -11,17 +11,19 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
+sys::import('modules.mime.class.userapi');
+use Xaraya\Modules\Mime\UserApi;
 
 /**
- *  Get the name of a mime type
+ *  Get the name of an extension
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    extensionId        the ID of the extension to lookup   (optional)
- *  @param  integer    extensionName     the Name of the extension to lookup (optional)
+ * @param array $args
+ * with
+ *     integer   extensionId       the ID of the extension to lookup   (optional)
+ *     string    extensionName     the Name of the extension to lookup (optional)
+ * @uses UserApi::getExtensions()
  *  returns array      An array of (subtypeId, extension) or an empty array
  */
-
 function mime_userapi_get_extension(array $args = [], $context = null)
 {
     extract($args);
@@ -31,36 +33,27 @@ function mime_userapi_get_extension(array $args = [], $context = null)
         throw new Exception($msg);
     }
 
-    // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable     = & xarDB::getTables();
-
-    $where = ' WHERE ';
-
+    // apply where clauses if relevant
     if (isset($extensionId)) {
-        $where .= ' id = ' . $extensionId;
+        $args['where'] = [
+            'id' => $extensionId,
+        ];
+        unset($args['extensionId']);
     } else {
-        $where .= " name = '" . strtolower($extensionName) . "'";
+        $args['where'] = [
+            'name' => strtolower($extensionName),
+        ];
+        unset($args['extensionName']);
     }
+    $objectlist = UserApi::getExtensions($args, $context);
 
-    // table and column definitions
-    $extension_table = & $xartable['mime_extension'];
-
-    $sql = "SELECT subtype_id,
-                   id,
-                   name
-              FROM $extension_table
-            $where";
-
-    $result = $dbconn->Execute($sql);
-
-    if (!$result || $result->EOF) {
+    $item = reset($objectlist->items);
+    if (empty($item)) {
         return [];
     }
-
-    $row = $result->GetRowAssoc(false);
-
-    return ['subtypeId'     => $row['subtype_id'],
-                 'extensionId'   => $row['id'],
-                 'extensionName' => $row['name'], ];
+    return [
+        'subtypeId'     => $item['subtype_id'],
+        'extensionId'   => $item['id'],
+        'extensionName' => $item['name'],
+    ];
 }

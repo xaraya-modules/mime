@@ -27,10 +27,13 @@ function mime_userapi_getall_extensions(array $args = [], $context = null)
 {
     extract($args);
 
-    // @todo apply where clauses if relevant
+    // apply where clauses if relevant
     if (isset($subtypeId)) {
         if (is_int($subtypeId)) {
-            $where = " WHERE subtype_id = $subtypeId";
+            $args['where'] = [
+                'subtype_id' => $subtypeId,
+            ];
+            unset($args['subtypeId']);
         } else {
             $msg = xarML(
                 'Supplied parameter [#(1)] for function [#(2)], is not an integer!',
@@ -39,8 +42,6 @@ function mime_userapi_getall_extensions(array $args = [], $context = null)
             );
             throw new Exception($msg);
         }
-    } else {
-        $where = '';
     }
     $objectlist = UserApi::getExtensions($args, $context);
 

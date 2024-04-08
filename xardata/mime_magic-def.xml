@@ -1,12 +1,12 @@
 <object name="mime_magic">
-  <objectid>930</objectid>
+  <objectid>22</objectid>
   <label>Mime Magic</label>
   <module_id>999</module_id>
-  <itemtype>290</itemtype>
+  <itemtype>3</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>392</maxid>
+  <maxid>0</maxid>
   <isalias>true</isalias>
   <datastore>dynamicdata</datastore>
   <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>

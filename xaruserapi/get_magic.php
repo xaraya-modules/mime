@@ -11,17 +11,19 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
+sys::import('modules.mime.class.userapi');
+use Xaraya\Modules\Mime\UserApi;
 
 /**
  *  Get the magic number(s) for a particular mime subtype
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    matgicId     the magicId of the magic # to lookup   (optional)
- *  @param  string     magicValue   the magic value of the magic # to lookup (optional)
- *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
+ * @param array $args
+ * with
+ *     integer  magicId     the magicId of the magic # to lookup   (optional)
+ *     string   magicValue  the magic value of the magic # to lookup (optional)
+ * @uses UserApi::getMagic()
+ * @return array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
  */
-
 function mime_userapi_get_magic(array $args = [], $context = null)
 {
     extract($args);
@@ -31,40 +33,30 @@ function mime_userapi_get_magic(array $args = [], $context = null)
         throw new Exception($msg);
     }
 
-    // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable     = & xarDB::getTables();
-
-    $where = ' WHERE ';
-
+    // apply where clauses if relevant
     if (isset($magicId)) {
-        $where .= ' id = ' . $magicId;
+        $args['where'] = [
+            'id' => $magicId,
+        ];
+        unset($args['magicId']);
     } else {
-        $where .= " value = '" . strtolower($magicValue) . "'";
+        // @checkme no strtolower() here!
+        $args['where'] = [
+            'value' => $magicValue,
+        ];
+        unset($args['magicValue']);
     }
+    $objectlist = UserApi::getMagic($args, $context);
 
-    // table and column definitions
-    $magic_table = & $xartable['mime_magic'];
-
-    $sql = "SELECT subtype_id,
-                   id,
-                   value,
-                   offset,
-                   length
-              FROM $magic_table
-            $where";
-
-    $result = $dbconn->Execute($sql);
-
-    if (!$result || $result->EOF) {
+    $item = reset($objectlist->items);
+    if (empty($item)) {
         return [];
     }
-
-    $row = $result->GetRowAssoc(false);
-
-    return ['subtypeId'   => $row['subtype_id'],
-                 'magicId'     => $row['id'],
-                 'magicValue'  => $row['value'],
-                 'magicOffset' => $row['offset'],
-                 'magicLength' => $row['length'], ];
+    return [
+        'subtypeId'   => $item['subtype_id'],
+        'magicId'     => $item['id'],
+        'magicValue'  => $item['value'],
+        'magicOffset' => $item['offset'],
+        'magicLength' => $item['length'],
+    ];
 }

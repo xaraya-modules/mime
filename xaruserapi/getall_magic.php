@@ -19,19 +19,21 @@ use Xaraya\Modules\Mime\UserApi;
  *
  * @param array $args
  * with
- *     integer    subtypeId   the magicId of the magic # to lookup   (optional)788888888888888888888890
- * @uses UserApi::getExtensions()
+ *     integer    subtypeId   the magicId of the magic # to lookup   (optional)
+ * @uses UserApi::getMagic()
  * @return array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
  */
-
 function mime_userapi_getall_magic(array $args = [], $context = null)
 {
     extract($args);
 
-    // @todo apply where clauses if relevant
+    // apply where clauses if relevant
     if (isset($subtypeId)) {
         if (is_int($subtypeId)) {
-            $where = " WHERE subtype_id = $subtypeId";
+            $args['where'] = [
+                'subtype_id' => $subtypeId,
+            ];
+            unset($args['subtypeId']);
         } else {
             $msg = xarML(
                 'Supplied parameter [#(1)] for function [#(2)], is not an integer!',
@@ -40,8 +42,6 @@ function mime_userapi_getall_magic(array $args = [], $context = null)
             );
             throw new Exception($msg);
         }
-    } else {
-        $where = '';
     }
     $objectlist = UserApi::getMagic($args, $context);
 

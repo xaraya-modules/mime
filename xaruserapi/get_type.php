@@ -11,17 +11,19 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
+sys::import('modules.mime.class.userapi');
+use Xaraya\Modules\Mime\UserApi;
 
 /**
  *  Get the name of a mime type
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    typeId    the ID of the mime type to lookup   (optional)
- *  @param  integer    typeName  the Name of the mime type to lookup (optional)
- *  returns array      An array of (typeId, typeName) or an empty array
+ * @param array $args
+ * with
+ *     integer    typeId   the ID of the mime type to lookup   (optional)
+ *     string     typeName the Name of the mime type to lookup (optional)
+ * @uses UserApi::getMimeTypes()
+ * @return array      An array of (typeId, typeName) or an empty array
  */
-
 function mime_userapi_get_type(array $args = [], $context = null)
 {
     extract($args);
@@ -31,34 +33,26 @@ function mime_userapi_get_type(array $args = [], $context = null)
         throw new Exception($msg);
     }
 
-    // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable     = & xarDB::getTables();
-
-    $where = ' WHERE ';
-
+    // apply where clauses if relevant
     if (isset($typeId)) {
-        $where .= ' id = ' . $typeId;
+        $args['where'] = [
+            'id' => $typeId,
+        ];
+        unset($args['typeId']);
     } else {
-        $where .= " name = '" . strtolower($typeName) . "'";
+        $args['where'] = [
+            'name' => strtolower($typeName),
+        ];
+        unset($args['typeName']);
     }
+    $objectlist = UserApi::getMimeTypes($args, $context);
 
-    // table and column definitions
-    $type_table = & $xartable['mime_type'];
-
-    $sql = "SELECT id,
-                   name
-              FROM $type_table
-            $where";
-
-    $result = $dbconn->Execute($sql);
-
-    if (!$result || $result->EOF) {
+    $item = reset($objectlist->items);
+    if (empty($item)) {
         return [];
     }
-
-    $row = $result->GetRowAssoc(false);
-
-    return ['typeId'   => (int) $row['id'],
-                 'typeName' => $row['name'], ];
+    return [
+        'typeId'   => (int) $item['id'],
+        'typeName' => $item['name'],
+    ];
 }

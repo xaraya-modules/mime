@@ -56,7 +56,7 @@ class UserApi implements UserApiInterface
     }
 
     /**
-     * Summary of getMimeType
+     * Summary of getExtension
      * @param string $mimeType
      * @return string|null
      */
@@ -73,8 +73,12 @@ class UserApi implements UserApiInterface
      */
     public static function getMimeTypes($args = [], $context = null)
     {
-        // @todo apply where clauses if relevant
         $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_types'], $context);
+        if (!empty($args['where'])) {
+            DataObjectFactory::applyObjectFilters($objectlist, $args['where']);
+            // count the items
+            //$objectlist->countItems();
+        }
         $objectlist->getItems();
         return $objectlist;
     }
@@ -87,8 +91,12 @@ class UserApi implements UserApiInterface
      */
     public static function getSubTypes($args = [], $context = null)
     {
-        // @todo apply where clauses if relevant
         $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_subtypes'], $context);
+        if (!empty($args['where'])) {
+            DataObjectFactory::applyObjectFilters($objectlist, $args['where']);
+            // count the items
+            //$objectlist->countItems();
+        }
         $objectlist->getItems();
         return $objectlist;
     }
@@ -101,8 +109,12 @@ class UserApi implements UserApiInterface
      */
     public static function getExtensions($args = [], $context = null)
     {
-        // @todo apply where clauses if relevant
         $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_extensions'], $context);
+        if (!empty($args['where'])) {
+            DataObjectFactory::applyObjectFilters($objectlist, $args['where']);
+            // count the items
+            //$objectlist->countItems();
+        }
         $objectlist->getItems();
         return $objectlist;
     }
@@ -115,8 +127,12 @@ class UserApi implements UserApiInterface
      */
     public static function getMagic($args = [], $context = null)
     {
-        // @todo apply where clauses if relevant
         $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_magic'], $context);
+        if (!empty($args['where'])) {
+            DataObjectFactory::applyObjectFilters($objectlist, $args['where']);
+            // count the items
+            //$objectlist->countItems();
+        }
         $objectlist->getItems();
         return $objectlist;
     }

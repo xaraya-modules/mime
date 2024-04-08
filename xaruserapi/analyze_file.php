@@ -17,6 +17,7 @@
  * MIME type of an unknown file.
  *
  * (note: based off of the Magic class in Horde <www.horde.org>)
+ * @todo replace with more recent equivalent - see MimeTypeDetector()
  *
  * @param string $fileName      The path to the file to analyze.
  * @param string $altFileName   Alternate file name to analyze extension (Optional).

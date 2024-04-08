@@ -27,12 +27,12 @@ function mime_userapi_getall_types(array $args = [], $context = null)
 {
     extract($args);
 
-    // @todo apply where clauses if relevant
-    if (isset($state) && is_array($state)) {
-        $args['where'] = 'state in (' . implode(', ', $state) . ')';
-    }
-    if (isset($state) && !is_array($state)) {
-        $args['where'] = 'state = ' . (int) $state;
+    // apply where clauses if relevant
+    if (isset($state)) {
+        $args['where'] = [
+            'state' => $state,
+        ];
+        unset($args['state']);
     }
     $objectlist = UserApi::getMimeTypes($args, $context);
 
