@@ -82,6 +82,16 @@ class MimeTypeDetector
         return $this->getDetector()->lookupAllExtensions($mimeType);
     }
 
+    public function getExtensionsForMimeTypesMap()
+    {
+        return GeneratedExtensionToMimeTypeMap::EXTENSIONS_FOR_MIME_TIMES;
+    }
+
+    public function getMimeTypesForExtensionsMap()
+    {
+        return GeneratedExtensionToMimeTypeMap::MIME_TYPES_FOR_EXTENSIONS;
+    }
+
     protected function getDetector()
     {
         if (!isset($this->detector)) {

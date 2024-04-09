@@ -101,6 +101,17 @@ final class MimeTypeDetectorTest extends TestCase
         $this->assertEquals($expected, $extension);
     }
 
+    public function testGeneratedMaps(): void
+    {
+        $detector = new MimeTypeDetector();
+
+        $expected = 1023;
+        $this->assertCount($expected, $detector->getExtensionsForMimeTypesMap());
+
+        $expected = 1233;
+        $this->assertCount($expected, $detector->getMimeTypesForExtensionsMap());
+    }
+
     /**
      * @dataProvider provideFileResults
      */
