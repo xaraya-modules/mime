@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package modules\mime
  * @category Xaraya Web Applications Framework
@@ -54,19 +55,21 @@ class AdminGui implements UserGuiInterface
             $args['context'] ??= $this->getContext();
             return $args;
         }
+        /** @var UserApi $userapi */
+        $userapi = $this->getAPI();
         if (!empty($args['objectname'])) {
-            xarModUserVars::set(UserApi::$moduleName, 'defaultmastertable', $args['objectname']);
+            xarModUserVars::set($this->moduleName, 'defaultmastertable', $args['objectname']);
         }
-        $args['objectname'] = xarModUserVars::get(UserApi::$moduleName, 'defaultmastertable');
+        $args['objectname'] = xarModUserVars::get($this->moduleName, 'defaultmastertable');
         $args['object'] = match ($args['objectname']) {
-            'mime_types'      => UserApi::getMimeTypes([], $this->getContext()),
-            'mime_subtypes'   => UserApi::getSubTypes([], $this->getContext()),
-            'mime_extensions' => UserApi::getExtensions([], $this->getContext()),
-            'mime_magic'      => UserApi::getMagic([], $this->getContext()),
+            'mime_types'      => $userapi::getMimeTypes([], $this->getContext()),
+            'mime_subtypes'   => $userapi::getSubTypes([], $this->getContext()),
+            'mime_extensions' => $userapi::getExtensions([], $this->getContext()),
+            'mime_magic'      => $userapi::getMagic([], $this->getContext()),
         };
 
         // Get the available dropdown options
-        $itemtypes = UserApi::getItemTypes();
+        $itemtypes = $userapi->getItemTypes();
         $options = [];
         foreach ($itemtypes as $itemtype => $item) {
             $options[] = ['id' => $item['name'], 'name' => $item['name']];

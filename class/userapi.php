@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package modules\mime
  * @category Xaraya Web Applications Framework
@@ -27,9 +28,6 @@ class UserApi implements UserApiInterface
 {
     use UserApiTrait;
 
-    public static string $moduleName = 'mime';
-    protected static int $moduleId = 999;
-    protected static int $itemtype = 0;
     protected static MimeTypeDetector $detector;
 
     /**

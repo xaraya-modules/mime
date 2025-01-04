@@ -26,7 +26,7 @@ function mime_admin_view(array $args = [], $context = null)
     if (!xarSecurity::check('ManageMime')) {
         return;
     }
-    $admingui = new AdminGui();
+    $admingui = xarMod::getModule('mime')->getAdminGUI();
     $admingui->setContext($context);
     return $admingui->view($args);
 }

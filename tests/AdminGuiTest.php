@@ -36,14 +36,14 @@ final class AdminGuiTest extends TestCase
     public function testAdminGui(): void
     {
         $expected = AdminGui::class;
-        $admingui = new AdminGui();
+        $admingui = xarMod::getModule('mime')->getAdminGUI();
         $this->assertEquals($expected, $admingui::class);
     }
 
     public function testMain(): void
     {
         $context = null;
-        $admingui = new AdminGui();
+        $admingui = xarMod::getModule('mime')->getAdminGUI();
         $admingui->setContext($context);
 
         $args = ['hello' => 'world'];
@@ -58,7 +58,7 @@ final class AdminGuiTest extends TestCase
     public function testView(): void
     {
         $context = null;
-        $admingui = new AdminGui();
+        $admingui = xarMod::getModule('mime')->getAdminGUI();
         $admingui->setContext($context);
 
         $args = ['hello' => 'world'];

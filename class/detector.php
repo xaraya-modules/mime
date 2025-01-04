@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package modules\mime
  * @category Xaraya Web Applications Framework

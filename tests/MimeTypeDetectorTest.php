@@ -105,10 +105,10 @@ final class MimeTypeDetectorTest extends TestCase
     {
         $detector = new MimeTypeDetector();
 
-        $expected = 1023;
+        $expected = 1028;
         $this->assertCount($expected, $detector->getExtensionsForMimeTypesMap());
 
-        $expected = 1233;
+        $expected = 1240;
         $this->assertCount($expected, $detector->getMimeTypesForExtensionsMap());
     }
 
