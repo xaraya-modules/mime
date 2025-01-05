@@ -18,5 +18,5 @@ function mime_userapi_getitemtypes(array $args = [], $context = null)
 {
     $userapi = xarMod::getAPI('mime');
     $userapi->setContext($context);
-    return $userapi->getItemTypes($args, $context);
+    return $userapi->getItemTypes($args);
 }

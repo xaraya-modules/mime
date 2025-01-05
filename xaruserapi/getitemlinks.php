@@ -20,5 +20,5 @@ function mime_userapi_getitemlinks(array $args = [], $context = null)
 {
     $userapi = xarMod::getAPI('mime');
     $userapi->setContext($context);
-    return $userapi->getItemLinks($args, $context);
+    return $userapi->getItemLinks($args);
 }
