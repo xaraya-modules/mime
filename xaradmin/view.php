@@ -11,7 +11,7 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Marc Lutolf <mfl@netspan.ch>
  */
-sys::import('modules.mime.class.admingui');
+
 use Xaraya\Modules\Mime\AdminGui;
 
 /**
@@ -23,9 +23,7 @@ use Xaraya\Modules\Mime\AdminGui;
  */
 function mime_admin_view(array $args = [], $context = null)
 {
-    if (!xarSecurity::check('ManageMime')) {
-        return;
-    }
+    /** @var AdminGui $admingui */
     $admingui = xarMod::getModule('mime')->getAdminGUI();
     $admingui->setContext($context);
     return $admingui->view($args);

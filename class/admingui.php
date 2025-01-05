@@ -13,22 +13,22 @@
 
 namespace Xaraya\Modules\Mime;
 
-use Xaraya\DataObject\Traits\UserGuiInterface;
-use Xaraya\DataObject\Traits\UserGuiTrait;
+use Xaraya\Core\Traits\AdminGuiInterface;
+use Xaraya\Core\Traits\AdminGuiTrait;
 use xarModUserVars;
 use xarVar;
 use sys;
 
 sys::import('modules.dynamicdata.class.objects.factory');
-sys::import('modules.dynamicdata.class.traits.usergui');
 sys::import('modules.mime.class.userapi');
+sys::import('xaraya.traits.adminguitrait');
 
 /**
  * Class instance to handle the Mime Admin GUI
 **/
-class AdminGui implements UserGuiInterface
+class AdminGui implements AdminGuiInterface
 {
-    use UserGuiTrait;
+    use AdminGuiTrait;
 
     /**
      * Summary of main
@@ -45,10 +45,13 @@ class AdminGui implements UserGuiInterface
     /**
      * Summary of view
      * @param array<string, mixed> $args
-     * @return array<mixed>
+     * @return array<mixed>|void
      */
     public function view(array $args = [])
     {
+        if (!$this->checkAccess('ManageMime')) {
+            return;
+        }
         // Define which object will be shown
         if (!xarVar::fetch('objectname', 'str', $args['objectname'], null, xarVar::DONT_SET)) {
             // Pass along the context for xarTpl::module() if needed
