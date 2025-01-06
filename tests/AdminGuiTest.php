@@ -55,10 +55,25 @@ final class AdminGuiTest extends TestCase
         $this->assertEquals($expected, $data);
     }
 
+    protected function createMockAdminGui(): AdminGui
+    {
+        //$admingui = xarMod::getModule('mime')->getAdminGUI();
+        $admingui = $this->getMockBuilder(AdminGui::class)
+            ->setConstructorArgs(['mime'])
+            ->onlyMethods(['checkAccess'])
+            ->getMock();
+        // override checkAccess() method to return true
+        $admingui->expects($this->once())
+            ->method('checkAccess')
+            ->willReturn(true);
+        return $admingui;
+    }
+
     public function testView(): void
     {
         $context = null;
-        $admingui = xarMod::getModule('mime')->getAdminGUI();
+        /** @var AdminGui $admingui */
+        $admingui = $this->createMockAdminGui();
         $admingui->setContext($context);
 
         $args = ['hello' => 'world'];
