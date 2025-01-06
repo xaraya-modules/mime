@@ -13,15 +13,15 @@
 
 namespace Xaraya\Modules\Mime;
 
-use Xaraya\Core\Traits\AdminGuiInterface;
-use Xaraya\Core\Traits\AdminGuiTrait;
+use Xaraya\Modules\AdminGuiInterface;
+use Xaraya\Modules\AdminGuiTrait;
 use xarModUserVars;
 use xarVar;
 use sys;
 
 sys::import('modules.dynamicdata.class.objects.factory');
 sys::import('modules.mime.class.userapi');
-sys::import('xaraya.traits.adminguitrait');
+sys::import('xaraya.modules.adminguitrait');
 
 /**
  * Class instance to handle the Mime Admin GUI
