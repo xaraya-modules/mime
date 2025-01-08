@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Xaraya\Context\Context;
 use Xaraya\Context\SessionContext;
 use Xaraya\Modules\Mime\AdminGui;
+use Xaraya\Modules\Mime\AdminGui\ViewMethod;
 use Xaraya\Modules\Mime\MimeTypeDetector;
 
 //use Xaraya\Sessions\SessionHandler;
@@ -55,29 +56,48 @@ final class AdminGuiTest extends TestCase
         $this->assertEquals($expected, $data);
     }
 
-    protected function createMockAdminGui(): AdminGui
+    protected function createMockClassWithAccess(string $modName, string $className, int $count = 1): object
     {
-        //$admingui = xarMod::getModule('mime')->getAdminGUI();
-        $admingui = $this->getMockBuilder(AdminGui::class)
-            ->setConstructorArgs(['mime'])
+        //$gui = xarMod::getModule($modName)->getGUI();
+        //$gui = xarMod::getModule($modName)->getAdminGUI();
+        $gui = $this->getMockBuilder($className)
+            ->setConstructorArgs([$modName])
             ->onlyMethods(['checkAccess'])
             ->getMock();
-        // override checkAccess() method to return true
-        $admingui->expects($this->once())
+        // override checkAccess() method to return true + check if called $count times
+        $constraint = $this->exactly($count);
+        $gui->expects($constraint)
             ->method('checkAccess')
             ->willReturn(true);
-        return $admingui;
+        return $gui;
     }
 
-    public function testView(): void
+    public function testCallView(): void
     {
         $context = null;
         /** @var AdminGui $admingui */
-        $admingui = $this->createMockAdminGui();
+        $admingui = $this->createMockClassWithAccess('mime', AdminGui::class, 0);
         $admingui->setContext($context);
 
+        // use __call() here
         $args = ['hello' => 'world'];
         $data = $admingui->view($args);
+
+        // will return null because we didn't override the MethodClass->checkAccess() here
+        $expected = null;
+        $this->assertEquals($expected, $data);
+    }
+
+    public function testViewMethod(): void
+    {
+        $context = null;
+        /** @var ViewMethod $viewmethod */
+        $viewmethod = $this->createMockClassWithAccess('mime', ViewMethod::class, 1);
+        $viewmethod->setContext($context);
+
+        // use __invoke() here
+        $args = ['hello' => 'world'];
+        $data = $viewmethod($args);
 
         $expected = array_merge($args, [
             'objectname' => 'mime_types',

@@ -15,11 +15,14 @@
 /**
  *  Get the name of a mime type
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    subtypeId   the subtypeID of the mime subtype to lookup (optional)
- *  @param  integer    subtypeName the Name of the mime sub type to lookup (optional)
- *  returns array      An array of (subtypeId, subtypeName) or an empty array
+ * @author Carl P. Corliss
+ * @access public
+ * @param array $args
+ * with
+ *      integer    subtypeId   the subtypeID of the mime subtype to lookup (optional)
+ *      integer    subtypeName the Name of the mime sub type to lookup (optional)
+ * @deprecated 1.5.0 use league/mime-type-detection instead
+ * @return array|string|void      An array of (subtypeId, subtypeName) or an empty array
  */
 
 function mime_userapi_get_mimetype(array $args = [], $context = null)

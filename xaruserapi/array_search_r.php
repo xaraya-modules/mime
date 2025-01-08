@@ -35,12 +35,14 @@
  *         $$var = 'something else';
  *
  *
- *    @author       Richard Sumilang      <richard@richard-sumilang.com> (original author)
- *    @author       Carl P. Corliss       <carl.corliss@xaraya.com>
- *    @param        string    $needle     What are you searching for?
- *    @param        array     $haystack   What you want to search in
- *    @return      array || FALSE        array of keys or FALSE if not found.
- *    @access        public
+ * @author       Richard Sumilang      <richard@richard-sumilang.com> (original author)
+ * @author       Carl P. Corliss       <carl.corliss@xaraya.com>
+ * @param array $args
+ * with
+ *     string    $needle     What are you searching for?
+ *     array     $haystack   What you want to search in
+ * @return      array|false            array of keys or FALSE if not found.
+ * @access        public
  */
 
 function mime_userapi_array_search_r(array $args = [], $context = null)

@@ -15,10 +15,13 @@
 /**
  *  Get the magic number(s) for a particular mime subtype
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    subtypeId   the magicId of the magic # to lookup   (optional)788888888888888888888890
- *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
+ * @author Carl P. Corliss
+ * @access public
+ * @param array $args
+ * with
+ *     integer    subtypeId   the magicId of the magic # to lookup   (optional)788888888888888888888890
+ * @deprecated 1.5.0 use league/mime-type-detection instead
+ * @return array|false      An array of (subtypeid, magicId, magic, offset, length) or an empty array
  */
 
 function mime_userapi_add_magic(array $args = [], $context = null)

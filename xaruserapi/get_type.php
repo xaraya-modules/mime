@@ -32,6 +32,9 @@ function mime_userapi_get_type(array $args = [], $context = null)
         $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_type');
         throw new Exception($msg);
     }
+    /** @var UserApi $userapi */
+    $userapi = xarMod::getAPI('mime');
+    $userapi->setContext($context);
 
     // apply where clauses if relevant
     if (isset($typeId)) {
@@ -45,7 +48,7 @@ function mime_userapi_get_type(array $args = [], $context = null)
         ];
         unset($args['typeName']);
     }
-    $objectlist = UserApi::getMimeTypes($args, $context);
+    $objectlist = $userapi->getMimeTypes($args, $context);
 
     $item = reset($objectlist->items);
     if (empty($item)) {

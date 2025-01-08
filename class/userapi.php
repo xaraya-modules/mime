@@ -3,7 +3,7 @@
 /**
  * @package modules\mime
  * @category Xaraya Web Applications Framework
- * @version 2.4.0
+ * @version 2.5.7
  * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link https://github.com/mikespub/xaraya-modules
@@ -22,7 +22,7 @@ use sys;
 sys::import('modules.dynamicdata.class.traits.userapi');
 
 /**
- * Class to handle the Mime User API (static for now)
+ * Class to handle the Mime User API
 **/
 class UserApi implements UserApiInterface
 {
@@ -34,7 +34,7 @@ class UserApi implements UserApiInterface
      * Get mime type detector
      * @uses \sys::autoload()
      */
-    public static function getDetector()
+    public function getDetector()
     {
         if (!isset(static::$detector)) {
             sys::autoload();
@@ -48,7 +48,7 @@ class UserApi implements UserApiInterface
      * @param string $filePath
      * @return string|null
      */
-    public static function checkFileType($filePath)
+    public function checkFileType($filePath)
     {
         return static::getDetector()->checkFileType($filePath);
     }
@@ -58,7 +58,7 @@ class UserApi implements UserApiInterface
      * @param string $mimeType
      * @return string|null
      */
-    public static function getExtension($mimeType)
+    public function getExtension($mimeType)
     {
         return static::getDetector()->getExtension($mimeType);
     }
@@ -66,12 +66,11 @@ class UserApi implements UserApiInterface
     /**
      * Summary of getMimeTypes
      * @param array<string, mixed> $args
-     * @param mixed $context
      * @return DataObjectList|null
      */
-    public static function getMimeTypes($args = [], $context = null)
+    public function getMimeTypes($args = [])
     {
-        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_types'], $context);
+        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_types'], $this->context);
         if (!empty($args['where'])) {
             DataObjectFactory::applyObjectFilters($objectlist, $args['where']);
             // count the items
@@ -84,12 +83,11 @@ class UserApi implements UserApiInterface
     /**
      * Summary of getSubTypes
      * @param array<string, mixed> $args
-     * @param mixed $context
      * @return DataObjectList|null
      */
-    public static function getSubTypes($args = [], $context = null)
+    public function getSubTypes($args = [])
     {
-        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_subtypes'], $context);
+        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_subtypes'], $this->context);
         if (!empty($args['where'])) {
             DataObjectFactory::applyObjectFilters($objectlist, $args['where']);
             // count the items
@@ -102,12 +100,11 @@ class UserApi implements UserApiInterface
     /**
      * Summary of getExtensions
      * @param array<string, mixed> $args
-     * @param mixed $context
      * @return DataObjectList|null
      */
-    public static function getExtensions($args = [], $context = null)
+    public function getExtensions($args = [])
     {
-        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_extensions'], $context);
+        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_extensions'], $this->context);
         if (!empty($args['where'])) {
             DataObjectFactory::applyObjectFilters($objectlist, $args['where']);
             // count the items
@@ -120,12 +117,11 @@ class UserApi implements UserApiInterface
     /**
      * Summary of getMagic
      * @param array<string, mixed> $args
-     * @param mixed $context
      * @return DataObjectList|null
      */
-    public static function getMagic($args = [], $context = null)
+    public function getMagic($args = [])
     {
-        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_magic'], $context);
+        $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_magic'], $this->context);
         if (!empty($args['where'])) {
             DataObjectFactory::applyObjectFilters($objectlist, $args['where']);
             // count the items

@@ -30,6 +30,9 @@ use Xaraya\Modules\Mime\UserApi;
 function mime_userapi_getall_subtypes(array $args = [], $context = null)
 {
     extract($args);
+    /** @var UserApi $userapi */
+    $userapi = xarMod::getAPI('mime');
+    $userapi->setContext($context);
 
     // The complete mime name can be passed in (type/subtype) and this
     // will be split up here for convenience.
@@ -41,7 +44,7 @@ function mime_userapi_getall_subtypes(array $args = [], $context = null)
     }
 
     // get type_id and type_name here too
-    $typelist = UserApi::getMimeTypes([], $context);
+    $typelist = $userapi->getMimeTypes([], $context);
     $mimetypes = $typelist->items;
 
     // apply where clauses if relevant
@@ -77,7 +80,7 @@ function mime_userapi_getall_subtypes(array $args = [], $context = null)
         $args['where']['state'] = $state;
         unset($args['state']);
     }
-    $objectlist = UserApi::getSubTypes($args, $context);
+    $objectlist = $userapi->getSubTypes($args, $context);
 
     $subtypeInfo = [];
     foreach ($objectlist->items as $itemid => $item) {

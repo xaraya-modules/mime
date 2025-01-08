@@ -5,7 +5,7 @@
     "homepage": "https://github.com/xaraya-modules/mime",
     "license": "GPL-2.0-or-later",
     "require": {
-        "league/mime-type-detection": "^1.15"
+        "league/mime-type-detection": "^1.16"
     },
     "autoload": {
         "classmap": ["./"]

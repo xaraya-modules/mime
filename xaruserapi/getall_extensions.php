@@ -26,6 +26,9 @@ use Xaraya\Modules\Mime\UserApi;
 function mime_userapi_getall_extensions(array $args = [], $context = null)
 {
     extract($args);
+    /** @var UserApi $userapi */
+    $userapi = xarMod::getAPI('mime');
+    $userapi->setContext($context);
 
     // apply where clauses if relevant
     if (isset($subtypeId)) {
@@ -43,7 +46,7 @@ function mime_userapi_getall_extensions(array $args = [], $context = null)
             throw new Exception($msg);
         }
     }
-    $objectlist = UserApi::getExtensions($args, $context);
+    $objectlist = $userapi->getExtensions($args, $context);
 
     $extensionInfo = [];
     foreach ($objectlist->items as $itemid => $item) {

@@ -32,6 +32,9 @@ function mime_userapi_get_magic(array $args = [], $context = null)
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId', 'userapi_get_magic', 'mime');
         throw new Exception($msg);
     }
+    /** @var UserApi $userapi */
+    $userapi = xarMod::getAPI('mime');
+    $userapi->setContext($context);
 
     // apply where clauses if relevant
     if (isset($magicId)) {
@@ -46,7 +49,7 @@ function mime_userapi_get_magic(array $args = [], $context = null)
         ];
         unset($args['magicValue']);
     }
-    $objectlist = UserApi::getMagic($args, $context);
+    $objectlist = $userapi->getMagic($args, $context);
 
     $item = reset($objectlist->items);
     if (empty($item)) {

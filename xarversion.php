@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'mime';
 $modversion['id']             = '999';
-$modversion['version']        = '2.5.3';
+$modversion['version']        = '2.5.7';
 $modversion['displayname']    = xarML('Mime');
 $modversion['description']    = 'Hook based module that returns the content-type of a given file.';
 $modversion['credits']        = 'xardocs/credits.txt';

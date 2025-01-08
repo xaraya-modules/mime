@@ -22,7 +22,7 @@ use Xaraya\Modules\Mime\UserApi;
  *     integer   extensionId       the ID of the extension to lookup   (optional)
  *     string    extensionName     the Name of the extension to lookup (optional)
  * @uses UserApi::getExtensions()
- *  returns array      An array of (subtypeId, extension) or an empty array
+ * @return array      An array of (subtypeId, extension) or an empty array
  */
 function mime_userapi_get_extension(array $args = [], $context = null)
 {
@@ -32,6 +32,9 @@ function mime_userapi_get_extension(array $args = [], $context = null)
         $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_extension');
         throw new Exception($msg);
     }
+    /** @var UserApi $userapi */
+    $userapi = xarMod::getAPI('mime');
+    $userapi->setContext($context);
 
     // apply where clauses if relevant
     if (isset($extensionId)) {
@@ -45,7 +48,7 @@ function mime_userapi_get_extension(array $args = [], $context = null)
         ];
         unset($args['extensionName']);
     }
-    $objectlist = UserApi::getExtensions($args, $context);
+    $objectlist = $userapi->getExtensions($args, $context);
 
     $item = reset($objectlist->items);
     if (empty($item)) {

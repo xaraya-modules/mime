@@ -19,8 +19,10 @@
  * (note: based off of the Magic class in Horde <www.horde.org>)
  * @todo replace with more recent equivalent - see MimeTypeDetector()
  *
- * @param string $fileName      The path to the file to analyze.
- * @param string $altFileName   Alternate file name to analyze extension (Optional).
+ * @param array $args
+ * with
+ *     string $fileName      The path to the file to analyze.
+ *     string $altFileName   Alternate file name to analyze extension (Optional).
  *
  * @return string  returns the mime type of the file, or FALSE on error. If it
  *                 can't figure out the type based on the magic entries

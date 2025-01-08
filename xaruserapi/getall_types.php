@@ -26,6 +26,9 @@ use Xaraya\Modules\Mime\UserApi;
 function mime_userapi_getall_types(array $args = [], $context = null)
 {
     extract($args);
+    /** @var UserApi $userapi */
+    $userapi = xarMod::getAPI('mime');
+    $userapi->setContext($context);
 
     // apply where clauses if relevant
     if (isset($state)) {
@@ -34,7 +37,7 @@ function mime_userapi_getall_types(array $args = [], $context = null)
         ];
         unset($args['state']);
     }
-    $objectlist = UserApi::getMimeTypes($args, $context);
+    $objectlist = $userapi->getMimeTypes($args);
 
     $typeInfo = [];
     foreach ($objectlist->items as $itemid => $item) {

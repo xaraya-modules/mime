@@ -15,10 +15,13 @@
 /**
  *  Get all mime types
  *
- *  @author Carl P. Corliss
- *  @access public
- *  @param  integer    typeName  the Name of the mime type to lookup (optional)
- *  returns array      An array of (typeId, typeName) or an empty array
+ * @author Carl P. Corliss
+ * @access public
+ * @param array $args
+ * with
+ *     integer    typeName  the Name of the mime type to lookup (optional)
+ * @deprecated 1.5.0 use league/mime-type-detection instead
+ * @return array|false      An array of (typeId, typeName) or an empty array
  */
 
 function mime_userapi_add_type(array $args = [], $context = null)
