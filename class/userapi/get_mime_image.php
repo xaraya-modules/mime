@@ -14,7 +14,7 @@ namespace Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarTpl;
 use sys;
-use BadParameterException;
+use Exception;
 
 sys::import('xaraya.modules.method');
 
