@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
+
+use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use sys;
@@ -20,6 +22,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * mime userapi getall_magic function
+ * @extends MethodClass<UserApi>
  */
 class GetallMagicMethod extends MethodClass
 {
@@ -56,7 +59,7 @@ class GetallMagicMethod extends MethodClass
                 throw new Exception($msg);
             }
         }
-        $objectlist = $userapi->getMagic($args, $this->getContext());
+        $objectlist = $userapi->getMagic($args);
 
         $magicInfo = [];
         foreach ($objectlist->items as $itemid => $item) {

@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Mime\AdminGui;
 
+
+use Xaraya\Modules\Mime\AdminGui;
 use Xaraya\Modules\MethodClass;
 use xarController;
 use xarSecurity;
@@ -22,6 +24,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * mime admin main function
+ * @extends MethodClass<AdminGui>
  */
 class MainMethod extends MethodClass
 {

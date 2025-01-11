@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
+
+use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use sys;
@@ -20,6 +22,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * mime userapi mime_to_extension function
+ * @extends MethodClass<UserApi>
  */
 class MimeToExtensionMethod extends MethodClass
 {

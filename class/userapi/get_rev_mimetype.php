@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
+
+use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use DataObjectFactory;
@@ -21,6 +23,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * mime userapi get_rev_mimetype function
+ * @extends MethodClass<UserApi>
  */
 class GetRevMimetypeMethod extends MethodClass
 {

@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
+
+use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use sys;
@@ -20,6 +22,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * mime userapi get_extension function
+ * @extends MethodClass<UserApi>
  */
 class GetExtensionMethod extends MethodClass
 {
@@ -58,7 +61,7 @@ class GetExtensionMethod extends MethodClass
             ];
             unset($args['extensionName']);
         }
-        $objectlist = $userapi->getExtensions($args, $this->getContext());
+        $objectlist = $userapi->getExtensions($args);
 
         $item = reset($objectlist->items);
         if (empty($item)) {

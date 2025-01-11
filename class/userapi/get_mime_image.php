@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
+
+use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarTpl;
 use sys;
@@ -20,6 +22,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * mime userapi get_mime_image function
+ * @extends MethodClass<UserApi>
  */
 class GetMimeImageMethod extends MethodClass
 {

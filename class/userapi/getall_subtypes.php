@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
+
+use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use sys;
@@ -20,6 +22,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * mime userapi getall_subtypes function
+ * @extends MethodClass<UserApi>
  */
 class GetallSubtypesMethod extends MethodClass
 {
@@ -90,7 +93,7 @@ class GetallSubtypesMethod extends MethodClass
             $args['where']['state'] = $state;
             unset($args['state']);
         }
-        $objectlist = $userapi->getSubTypes($args, $this->getContext());
+        $objectlist = $userapi->getSubTypes($args);
 
         $subtypeInfo = [];
         foreach ($objectlist->items as $itemid => $item) {

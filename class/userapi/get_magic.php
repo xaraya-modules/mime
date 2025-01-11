@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
+
+use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use sys;
@@ -20,6 +22,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * mime userapi get_magic function
+ * @extends MethodClass<UserApi>
  */
 class GetMagicMethod extends MethodClass
 {
@@ -59,7 +62,7 @@ class GetMagicMethod extends MethodClass
             ];
             unset($args['magicValue']);
         }
-        $objectlist = $userapi->getMagic($args, $this->getContext());
+        $objectlist = $userapi->getMagic($args);
 
         $item = reset($objectlist->items);
         if (empty($item)) {

@@ -23,7 +23,29 @@ sys::import('modules.dynamicdata.class.traits.userapi');
 
 /**
  * Class to handle the Mime User API
-**/
+ *
+ * @method mixed addExtension(array $args)
+ * @method mixed addMagic(array $args)
+ * @method mixed addSubtype(array $args)
+ * @method mixed addType(array $args)
+ * @method mixed analyzeFile(array $args)
+ * @method mixed arraySearchR(array $args)
+ * @method mixed extensionToMime(array $args)
+ * @method mixed getExtension(array $args)
+ * @method mixed getMagic(array $args)
+ * @method mixed getMimeImage(array $args)
+ * @method mixed getMimetype(array $args)
+ * @method mixed getRevMimetype(array $args)
+ * @method mixed getSubtype(array $args)
+ * @method mixed getType(array $args)
+ * @method mixed getallExtensions(array $args)
+ * @method mixed getallMagic(array $args)
+ * @method mixed getallSubtypes(array $args)
+ * @method mixed getallTypes(array $args)
+ * @method mixed importMimelist(array $args)
+ * @method mixed mimeToExtension(array $args)
+ * @extends UserApiClass<Module>
+ */
 class UserApi implements UserApiInterface
 {
     /** @use UserApiTrait<Module> */
