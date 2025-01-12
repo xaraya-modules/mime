@@ -35,8 +35,8 @@ class GetRevMimetypeMethod extends MethodClass
      * @access public
      * @param array $args
      * with
-     *     string     the mime type we want to lookup id's for
-     * @return array An array of (subtypeId, subtypeName) or an empty array
+     *     string|int mimeType the mime type we want to lookup id's for
+     * @return array An array of (typeId, subtypeId) or an empty array
      */
     public function __invoke(array $args = [])
     {
@@ -52,24 +52,29 @@ class GetRevMimetypeMethod extends MethodClass
             $types->getItem(['itemid' => $mimeType]);
             $mimeType = $types->properties['name']->value;
         }
+        $userapi = $this->getParent();
 
         $mimeType = explode('/', $mimeType);
 
-        $typeInfo = xarMod::apiFunc('mime', 'user', 'get_type', ['typeName' => $mimeType[0]]);
+        $typeInfo = $userapi->getType(['typeName' => $mimeType[0]]);
         if (!isset($typeInfo['typeId'])) {
             // if not found return 0 for the id of both type / subtype
             return ['typeId' => 0, 'subtypeId' => 0];
         } else {
-            $typeId = & $typeInfo['typeId'];
+            $typeId = $typeInfo['typeId'];
         }
 
-        $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', ['subtypeName' => $mimeType[1]]);
+        // Pick exact match here
+        $subtypeInfo = $userapi->getSubtype([
+            'typeName' => $mimeType[0],
+            'subtypeName' => $mimeType[1],
+        ]);
 
         if (!isset($subtypeInfo['subtypeId'])) {
             // if not found return 0 for the subtypeId
-            return ['typeId' => $typeId, 'subtypeId' => 0];
+            return ['typeId' => (int) $typeId, 'subtypeId' => 0];
         } else {
-            return ['typeId' => $typeId, 'subtypeId' => $subtypeInfo['subtypeId']];
+            return ['typeId' => (int) $typeId, 'subtypeId' => (int) $subtypeInfo['subtypeId']];
         }
     }
 }

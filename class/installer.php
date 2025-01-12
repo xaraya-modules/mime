@@ -46,7 +46,7 @@ class Installer extends InstallerClass
             // add your module variables here
             'defaultmastertable' => 'mime_types',
         ];
-        $this->oldversion = '2.5.3';
+        $this->oldversion = '2.6.0';
     }
 
     /**
@@ -92,6 +92,15 @@ class Installer extends InstallerClass
             case '1.5.0':
                 // Upgrade from version 1.5.0
                 // @todo remove old permissions?
+            case '2.5.3':
+                // Upgrade from version 2.5.3
+            case '2.5.7':
+                // Upgrade from version 2.5.7
+                // Re-create DD objects to fix extension
+                parent::delete();
+                parent::init();
+            case '2.6.0':
+                // Upgrade from version 2.6.0
         }
 
         return true;

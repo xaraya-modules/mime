@@ -39,15 +39,13 @@ class GetallExtensionsMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         extract($args);
-        /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
-        $userapi->setContext($this->getContext());
+        $userapi = $this->getParent();
 
         // apply where clauses if relevant
         if (isset($subtypeId)) {
             if (is_int($subtypeId)) {
                 $args['where'] = [
-                    'subtype_id' => $subtypeId,
+                    'subtype' => $subtypeId,
                 ];
                 unset($args['subtypeId']);
             } else {
@@ -59,13 +57,14 @@ class GetallExtensionsMethod extends MethodClass
                 throw new Exception($msg);
             }
         }
-        $objectlist = $userapi->getExtensions($args);
+        $objectlist = $userapi->getExtensionList($args);
 
         $extensionInfo = [];
         foreach ($objectlist->items as $itemid => $item) {
             $extensionInfo[$item['id']] = [
-                'extensionId'   => $item['id'],
-                'extensionName' => $item['name'],
+                'subtypeId'     => (int) $item['subtype'],
+                'extensionId'   => (int) $item['id'],
+                'extensionName' => (string) $item['name'],
             ];
         }
 

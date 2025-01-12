@@ -37,8 +37,9 @@ class AnalyzeFileMethod extends MethodClass
      * with
      *     string $fileName      The path to the file to analyze.
      *     string $altFileName   Alternate file name to analyze extension (Optional).
-     * @return string returns the mime type of the file, or FALSE on error. If it
-     * can't figure out the type based on the magic entries
+     *     int    $skipTest      Skip a number of tests to verify methods (Optional).
+     * @return string returns the mime type and optional charset of the file, or FALSE on error.
+     * If it can't figure out the type based on the magic entries
      * it will try to guess one of either text/plain or
      * application/octet-stream by reading the first 256 bytes of the file
      */
@@ -54,9 +55,12 @@ class AnalyzeFileMethod extends MethodClass
         if (!isset($altFileName) || !strlen($altFileName)) {
             $altFileName = $fileName;
         }
+        if (empty($skipTest)) {
+            $skipTest = 0;
+        }
 
         // Start off trying mime_content_type
-        if (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
+        if ($skipTest < 1 && function_exists('mime_content_type')) {
             $ftype = mime_content_type($fileName);
             if (isset($ftype) && strlen($ftype)) {
                 return $ftype;
@@ -65,20 +69,26 @@ class AnalyzeFileMethod extends MethodClass
 
         // Try to use if disponible pecl fileinfo extension
         // Note: as of PHP 5.3 this is included in the PHP distribution. Leave the if condition here, doesn't do any harm.
-        if (extension_loaded('fileinfo')) {
+        if ($skipTest < 2 && extension_loaded('fileinfo')) {
             $res = finfo_open(FILEINFO_MIME);
             $mime_type = finfo_file($res, $fileName);
             finfo_close($res);
             if (isset($mime_type) && strlen($mime_type)) {
+                if (str_contains($mime_type, ';')) {
+                    [$mime_type, $charset] = explode(';', $mime_type);
+                }
                 return $mime_type;
             }
         }
 
         // If that didn't work, try getimagesize to see if the file is an image
-        $fileInfo = @getimagesize($fileName);
-        if (is_array($fileInfo) && isset($fileInfo['mime'])) {
-            return $fileInfo['mime'];
+        if ($skipTest < 3) {
+            $fileInfo = @getimagesize($fileName);
+            if (is_array($fileInfo) && isset($fileInfo['mime'])) {
+                return $fileInfo['mime'];
+            }
         }
+        $userapi = $this->getParent();
 
         // Otherwise, see if the file is empty and, if so
         // return it as octet-stream
@@ -87,9 +97,9 @@ class AnalyzeFileMethod extends MethodClass
             $parts = explode('.', $altFileName);
             if (is_array($parts) && count($parts)) {
                 $extension = basename(end($parts));
-                $typeInfo = xarMod::apiFunc('mime', 'user', 'get_extension', ['extensionName' => $extension]);
+                $typeInfo = $userapi->getExtension(['extensionName' => $extension]);
                 if (is_array($typeInfo) && count($typeInfo)) {
-                    $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', ['subtypeId' => $typeInfo['subtypeId']]);
+                    $mimeType = $userapi->getMimetype(['subtypeId' => (int) $typeInfo['subtypeId']]);
                     return $mimeType;
                 } else {
                     return 'application/octet-stream';
@@ -103,7 +113,7 @@ class AnalyzeFileMethod extends MethodClass
             $msg = xarML('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
             throw new Exception($msg);
         } else {
-            $mime_list = xarMod::apiFunc('mime', 'user', 'getall_magic');
+            $mime_list = $userapi->getallMagic();
 
 
             foreach ($mime_list as $mime_type => $mime_info) {
@@ -143,12 +153,7 @@ class AnalyzeFileMethod extends MethodClass
 
                     if ($magicInfo['value'] == base64_encode($value)) {
                         fclose($fp);
-                        $mimeType = xarMod::apiFunc(
-                            'mime',
-                            'user',
-                            'get_mimetype',
-                            ['subtypeId' => $magicInfo['subtypeId']]
-                        );
+                        $mimeType = $userapi->getMimetype(['subtypeId' => (int) $magicInfo['subtypeId']]);
                         if (!empty($mimeType)) {
                             return $mimeType;
                         }
@@ -159,9 +164,9 @@ class AnalyzeFileMethod extends MethodClass
             $parts = explode('.', $altFileName);
             if (is_array($parts) && count($parts)) {
                 $extension = basename(end($parts));
-                $typeInfo = xarMod::apiFunc('mime', 'user', 'get_extension', ['extensionName' => $extension]);
+                $typeInfo = $userapi->getExtension(['extensionName' => $extension]);
                 if (is_array($typeInfo) && count($typeInfo)) {
-                    $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', ['subtypeId' => $typeInfo['subtypeId']]);
+                    $mimeType = $userapi->getMimetype(['subtypeId' => (int) $typeInfo['subtypeId']]);
                     return $mimeType;
                 }
             }

@@ -52,20 +52,21 @@ class MimeToExtensionMethod extends MethodClass
             $msg = xarML('Missing mime type or subtype parameter!');
             throw new Exception($msg);
         }
+        $userapi = $this->getParent();
 
         $args = [
             'typeName' => $typeparts[0],
             'subtypeName' => $typeparts[1],
         ];
-        $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', $args);
+        $subtypeInfo = $userapi->getSubtype($args);
         if (empty($subtypeInfo)) {
             return '';
         }
 
         $args = [
-            'subtypeId' => $subtypeInfo['subtypeId'],
+            'subtypeId' => (int) $subtypeInfo['subtypeId'],
         ];
-        $extensions = xarMod::apiFunc('mime', 'user', 'getall_extensions', $args);
+        $extensions = $userapi->getallExtensions($args);
         // @todo what if we have more than 1 extension?
         $extensionInfo = reset($extensions);
         if (empty($extensionInfo)) {

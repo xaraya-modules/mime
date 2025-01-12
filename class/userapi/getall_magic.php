@@ -39,15 +39,13 @@ class GetallMagicMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         extract($args);
-        /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
-        $userapi->setContext($this->getContext());
+        $userapi = $this->getParent();
 
         // apply where clauses if relevant
         if (isset($subtypeId)) {
             if (is_int($subtypeId)) {
                 $args['where'] = [
-                    'subtype_id' => $subtypeId,
+                    'subtype' => $subtypeId,
                 ];
                 unset($args['subtypeId']);
             } else {
@@ -59,16 +57,16 @@ class GetallMagicMethod extends MethodClass
                 throw new Exception($msg);
             }
         }
-        $objectlist = $userapi->getMagic($args);
+        $objectlist = $userapi->getMagicList($args);
 
         $magicInfo = [];
         foreach ($objectlist->items as $itemid => $item) {
             $magicInfo[$item['id']] = [
-                'magicId'     => $item['id'],
-                'subtypeId'   => $item['subtype_id'],
-                'magicValue'  => $item['value'],
-                'magicOffset' => $item['offset'],
-                'magicLength' => $item['length'],
+                'magicId'     => (int) $item['id'],
+                'subtypeId'   => (int) $item['subtype'],
+                'magicValue'  => (string) $item['value'],
+                'magicOffset' => (int) $item['offset'],
+                'magicLength' => (int) $item['length'],
             ];
         }
 

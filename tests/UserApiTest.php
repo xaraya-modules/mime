@@ -88,7 +88,7 @@ final class UserApiTest extends TestCase
     /**
      * @dataProvider provideFileResults
      */
-    public function testGetExtension($path, $mimeType, $alternative): void
+    public function testGetNewExtension($path, $mimeType, $alternative): void
     {
         // @todo unsupported extensions .xt and .*.twig
         $expected = pathinfo($path, PATHINFO_EXTENSION);
@@ -102,21 +102,21 @@ final class UserApiTest extends TestCase
 
         /** @var UserApi $userapi */
         $userapi = xarMod::getAPI('mime');
-        $extension = $userapi->getExtension($mimeType);
+        $extension = $userapi->getNewExtension($mimeType);
         // @todo unsupported extensions .xt and .*.twig + alternative .php mimeType
         if ($extension != $expected && !is_null($alternative)) {
-            $extension = $userapi->getExtension($alternative);
+            $extension = $userapi->getNewExtension($alternative);
         }
         $this->assertEquals($expected, $extension);
     }
 
-    public function testGetMimeTypes(): void
+    public function testGetMimeTypeList(): void
     {
         /** @var UserApi $userapi */
         $userapi = xarMod::getAPI('mime');
 
         $expected = 'mime_types';
-        $typelist = $userapi->getMimeTypes();
+        $typelist = $userapi->getMimeTypeList();
         $this->assertEquals($expected, $typelist->name);
 
         $expected = 11;
@@ -128,13 +128,13 @@ final class UserApiTest extends TestCase
         $this->assertEquals($expected, $first['name']);
     }
 
-    public function testGetSubTypes(): void
+    public function testGetSubTypeList(): void
     {
         /** @var UserApi $userapi */
         $userapi = xarMod::getAPI('mime');
 
         $expected = 'mime_subtypes';
-        $subtypelist = $userapi->getSubTypes();
+        $subtypelist = $userapi->getSubTypeList();
         $this->assertEquals($expected, $subtypelist->name);
 
         $expected = 215;
@@ -146,13 +146,13 @@ final class UserApiTest extends TestCase
         $this->assertEquals($expected, $last['name']);
     }
 
-    public function testGetExtensions(): void
+    public function testGetExtensionList(): void
     {
         /** @var UserApi $userapi */
         $userapi = xarMod::getAPI('mime');
 
         $expected = 'mime_extensions';
-        $extensionlist = $userapi->getExtensions();
+        $extensionlist = $userapi->getExtensionList();
         $this->assertEquals($expected, $extensionlist->name);
 
         $expected = 176;
@@ -164,13 +164,13 @@ final class UserApiTest extends TestCase
         $this->assertEquals($expected, $last['name']);
     }
 
-    public function testGetMagic(): void
+    public function testGetMagicList(): void
     {
         /** @var UserApi $userapi */
         $userapi = xarMod::getAPI('mime');
 
         $expected = 'mime_magic';
-        $magiclist = $userapi->getMagic();
+        $magiclist = $userapi->getMagicList();
         $this->assertEquals($expected, $magiclist->name);
 
         $expected = 392;
@@ -180,5 +180,257 @@ final class UserApiTest extends TestCase
         $expected = 'UENEX0lQSQ==';
         $last = end($magic);
         $this->assertEquals($expected, $last['value']);
+    }
+
+    public function testGetTypeById(): void
+    {
+        $typeId = 4;
+        $expected = [
+            'typeId' => 4,
+            'typeName' => 'font',
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getType(['typeId' => $typeId]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetTypeByName(): void
+    {
+        $typeName = 'text';
+        $expected = [
+            'typeId' => 8,
+            'typeName' => 'text',
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getType(['typeName' => $typeName]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetSubtypeById(): void
+    {
+        $subtypeId = 66;
+        $expected = [
+            'subtypeId' => 66,
+            'subtypeName' => 'x-httpd-php',
+            'subtypeDesc' => '',
+            'typeId' => 1,
+            'typeName' => 'application',
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getSubtype(['subtypeId' => $subtypeId]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetSubtypeByName(): void
+    {
+        $typeName = 'image';
+        $subtypeName = 'gif';
+        $expected = [
+            'subtypeId' => 153,
+            'subtypeName' => 'gif',
+            'subtypeDesc' => '',
+            'typeId' => 5,
+            'typeName' => 'image',
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getSubtype([
+            'typeName' => $typeName,
+            'subtypeName' => $subtypeName,
+        ]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetExtensionById(): void
+    {
+        $extensionId = 90;
+        $expected = [
+            'subtypeId' => 106,
+            'extensionId' => 90,
+            'extensionName' => 'zip',
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getExtension(['extensionId' => $extensionId]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetExtensionByName(): void
+    {
+        $extensionName = 'png';
+        $expected = [
+            'subtypeId' => 156,
+            'extensionId' => 118,
+            'extensionName' => 'png',
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getExtension(['extensionName' => $extensionName]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetMagicById(): void
+    {
+        $magicId = 327;
+        $expected = [
+            'subtypeId' => 155,
+            'magicId' => 327,
+            'magicValue' => '/9g=',
+            'magicOffset' => 0,
+            'magicLength' => 2,
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getMagic(['magicId' => $magicId]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetMagicByValue(): void
+    {
+        $magicValue = 'AAABug==';
+        $expected = [
+            'subtypeId' => 110,
+            'magicId' => 385,
+            'magicValue' => 'AAABug==',
+            'magicOffset' => 0,
+            'magicLength' => 4,
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getMagic(['magicValue' => $magicValue]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetMimetypeById(): void
+    {
+        $subtypeId = 153;
+        $expected = 'image/gif';
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getMimetype(['subtypeId' => $subtypeId]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetMimetypeByName(): void
+    {
+        $subtypeName = 'jpeg';
+        $expected = 'image/jpeg';
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getMimetype(['subtypeName' => $subtypeName]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetRevMimetype(): void
+    {
+        $mimeType = 'audio/mpeg';
+        $expected = [
+            'typeId' => 2,
+            'subtypeId' => 110,
+        ];
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getRevMimetype(['mimeType' => $mimeType]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider provideFileResults
+     */
+    public function testAnalyzeFile($path, $mimeType, $alternative): void
+    {
+        $expected = $mimeType;
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->analyzeFile(['fileName' => $path]);
+
+        if ($result != $expected && !empty($alternative)) {
+            $expected = $alternative;
+        }
+        $this->assertEquals($expected, $result);
+
+        $expected = [$mimeType, $alternative];
+
+        $skipTest = 1;
+        $result = $userapi->analyzeFile(['fileName' => $path, 'skipTest' => $skipTest]);
+        $this->assertContains($result, $expected);
+
+        // for .xt and .json files
+        if (!in_array('text/plain', $expected)) {
+            $expected[] = 'text/plain';
+        }
+
+        $skipTest = 2;
+        $result = $userapi->analyzeFile(['fileName' => $path, 'skipTest' => $skipTest]);
+        $this->assertContains($result, $expected);
+
+        $skipTest = 3;
+        $result = $userapi->analyzeFile(['fileName' => $path, 'skipTest' => $skipTest]);
+        $this->assertContains($result, $expected);
+    }
+
+    public function testExtensionToMime(): void
+    {
+        $fileName = 'file.zip';
+        $expected = 'application/zip';
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->extensionToMime(['fileName' => $fileName]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMimeToExtension(): void
+    {
+        $mimeType = 'application/pdf';
+        $expected = 'pdf';
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->mimeToExtension(['mime_type' => $mimeType]);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetMimeImage(): void
+    {
+        $mimeType = 'audio/x-mp3';
+        $baseurl = 'http://localhost/xaraya/code/modules/mime/xarimages/audio-x-mp3.png';
+        $expected = $baseurl . 'code/modules/mime/xarimages/audio-x-mp3.png';
+
+        xarServer::setBaseURL($baseurl);
+
+        /** @var UserApi $userapi */
+        $userapi = xarMod::getAPI('mime');
+        $result = $userapi->getMimeImage(['mimeType' => $mimeType]);
+
+        $this->assertEquals($expected, $result);
     }
 }

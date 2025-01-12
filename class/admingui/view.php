@@ -47,16 +47,15 @@ class ViewMethod extends MethodClass
         }
         /** @var UserApi $userapi */
         $userapi = $this->getAPI();
-        $userapi->setContext($this->getContext());
         if (!empty($args['objectname'])) {
             xarModUserVars::set($this->moduleName, 'defaultmastertable', $args['objectname']);
         }
         $args['objectname'] = xarModUserVars::get($this->moduleName, 'defaultmastertable');
         $args['object'] = match ($args['objectname']) {
-            'mime_types'      => $userapi->getMimeTypes([]),
-            'mime_subtypes'   => $userapi->getSubTypes([]),
-            'mime_extensions' => $userapi->getExtensions([]),
-            'mime_magic'      => $userapi->getMagic([]),
+            'mime_types'      => $userapi->getMimeTypeList(),
+            'mime_subtypes'   => $userapi->getSubTypeList(),
+            'mime_extensions' => $userapi->getExtensionList(),
+            'mime_magic'      => $userapi->getMagicList(),
         };
 
         // Get the available dropdown options

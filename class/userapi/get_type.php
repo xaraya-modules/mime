@@ -45,14 +45,12 @@ class GetTypeMethod extends MethodClass
             $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_type');
             throw new Exception($msg);
         }
-        /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
-        $userapi->setContext($this->getContext());
+        $userapi = $this->getParent();
 
         // apply where clauses if relevant
         if (isset($typeId)) {
             $args['where'] = [
-                'id' => $typeId,
+                'id' => (int) $typeId,
             ];
             unset($args['typeId']);
         } else {
@@ -61,7 +59,7 @@ class GetTypeMethod extends MethodClass
             ];
             unset($args['typeName']);
         }
-        $objectlist = $userapi->getMimeTypes($args);
+        $objectlist = $userapi->getMimeTypeList($args);
 
         $item = reset($objectlist->items);
         if (empty($item)) {
@@ -69,7 +67,7 @@ class GetTypeMethod extends MethodClass
         }
         return [
             'typeId'   => (int) $item['id'],
-            'typeName' => $item['name'],
+            'typeName' => (string) $item['name'],
         ];
     }
 }

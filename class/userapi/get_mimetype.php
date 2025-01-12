@@ -37,7 +37,7 @@ class GetMimetypeMethod extends MethodClass
      *      integer    subtypeId   the subtypeID of the mime subtype to lookup (optional)
      *      integer    subtypeName the Name of the mime sub type to lookup (optional)
      * @deprecated 1.5.0 use league/mime-type-detection instead
-     * @return array|string|void An array of (subtypeId, subtypeName) or an empty array
+     * @return string A string of typeName/subtypeName or an empty string
      */
     public function __invoke(array $args = [])
     {
@@ -47,37 +47,19 @@ class GetMimetypeMethod extends MethodClass
             $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_subtype');
             throw new Exception($msg);
         }
+        $userapi = $this->getParent();
 
-        // Get database setup
-        $dbconn = xarDB::getConn();
-        $xartable     = & xarDB::getTables();
+        // No need to duplicate the database query here.
+        $subtypes = $userapi->getallSubtypes($args);
 
-        $where = ' WHERE ';
-
-        if (isset($subtypeId)) {
-            $where .= ' xmstype.id = ' . $subtypeId;
-        } else {
-            $where .= " xmstype.name = '" . strtolower($subtypeName) . "'";
+        if (empty($subtypes)) {
+            // No matches.
+            return '';
         }
 
-        // table and column definitions
-        $subtype_table = & $xartable['mime_subtype'];
-        $type_table    = & $xartable['mime_type'];
+        // Pick first match here
+        $subtypeInfo = reset($subtypes);
 
-        $sql = "SELECT xmtype.sname AS mimetype,
-                       xmstype.name AS mimesubtype
-                  FROM $type_table AS xmtype, $subtype_table AS xmstype
-                $where
-                   AND xmtype.id = xmstype.type_id";
-
-        $result = $dbconn->Execute($sql);
-
-        if (!$result || $result->EOF) {
-            return;
-        }
-
-        $row = $result->GetRowAssoc(false);
-
-        return $row['mimetype'] . '/' . $row['mimesubtype'];
+        return $subtypeInfo['typeName'] . '/' . $subtypeInfo['subtypeName'];
     }
 }

@@ -39,24 +39,22 @@ class GetallTypesMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         extract($args);
-        /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
-        $userapi->setContext($this->getContext());
+        $userapi = $this->getParent();
 
         // apply where clauses if relevant
         if (isset($state)) {
             $args['where'] = [
-                'state' => $state,
+                'state' => (int) $state,
             ];
             unset($args['state']);
         }
-        $objectlist = $userapi->getMimeTypes($args);
+        $objectlist = $userapi->getMimeTypeList($args);
 
         $typeInfo = [];
         foreach ($objectlist->items as $itemid => $item) {
             $typeInfo[$item['id']] = [
-                'typeId'   => $item['id'],
-                'typeName' => $item['name'],
+                'typeId'   => (int) $item['id'],
+                'typeName' => (string) $item['name'],
             ];
         }
 

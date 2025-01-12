@@ -31,6 +31,7 @@ class ImportMimelistMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         extract($args);
+        $userapi = $this->getParent();
 
         $descriptions = [];
 
@@ -41,45 +42,32 @@ class ImportMimelistMethod extends MethodClass
             */
             $mimeType = explode('/', $mimeTypeText);
 
-            $typeInfo = xarMod::apiFunc('mime', 'user', 'get_type', ['typeName' => $mimeType[0]]);
+            $typeInfo = $userapi->getType(['typeName' => $mimeType[0]]);
             if (!isset($typeInfo['typeId'])) {
-                $typeId = xarMod::apiFunc('mime', 'user', 'add_type', ['typeName' => $mimeType[0]]);
+                $typeId = $userapi->addType(['typeName' => $mimeType[0]]);
             } else {
-                $typeId = & $typeInfo['typeId'];
+                $typeId = $typeInfo['typeId'];
             }
 
-            $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', ['subtypeName' => $mimeType[1]]);
+            $subtypeInfo = $userapi->getSubtype(['subtypeName' => $mimeType[1]]);
             if (!isset($subtypeInfo['subtypeId'])) {
-                $subtypeId = xarMod::apiFunc(
-                    'mime',
-                    'user',
-                    'add_subtype',
-                    [
-                        'subtypeName'   => $mimeType[1],
-                        'typeId'        => $typeId,
-                        'subtypeDesc'   => ($mimeInfo['description'] ?? null),
-                    ]
-                );
+                $subtypeId = $userapi->addSubtype([
+                    'subtypeName'   => $mimeType[1],
+                    'typeId'        => $typeId,
+                    'subtypeDesc'   => ($mimeInfo['description'] ?? null),
+                ]);
             } else {
-                $subtypeId = & $subtypeInfo['subtypeId'];
+                $subtypeId = $subtypeInfo['subtypeId'];
             }
 
             if (isset($mimeInfo['extensions']) && count($mimeInfo['extensions'])) {
                 foreach ($mimeInfo['extensions'] as $extension) {
-                    $extensionInfo = xarMod::apiFunc(
-                        'mime',
-                        'user',
-                        'get_extension',
-                        ['extensionName' => $extension]
-                    );
+                    $extensionInfo = $userapi->getExtension(['extensionName' => $extension]);
                     if (!isset($extensionInfo['extensionId'])) {
-                        $extensionId = xarMod::apiFunc(
-                            'mime',
-                            'user',
-                            'add_extension',
-                            ['subtypeId'     => $subtypeId,
-                                'extensionName' => $extension, ]
-                        );
+                        $extensionId = $userapi->addExtension([
+                            'subtypeId'     => $subtypeId,
+                            'extensionName' => $extension,
+                        ]);
                     } else {
                         $extensionId = $extensionInfo['extensionId'];
                     }
@@ -88,22 +76,14 @@ class ImportMimelistMethod extends MethodClass
 
             if (isset($mimeInfo['needles']) && count($mimeInfo['needles'])) {
                 foreach ($mimeInfo['needles'] as $magicNumber => $magicInfo) {
-                    $info = xarMod::apiFunc(
-                        'mime',
-                        'user',
-                        'get_magic',
-                        ['magicValue' => $magicNumber]
-                    );
+                    $info = $userapi->getMagic(['magicValue' => $magicNumber]);
                     if (!isset($info['magicId'])) {
-                        $magicId = xarMod::apiFunc(
-                            'mime',
-                            'user',
-                            'add_magic',
-                            ['subtypeId'   => $subtypeId,
-                                'magicValue'  => $magicNumber,
-                                'magicOffset' => $magicInfo['offset'],
-                                'magicLength' => $magicInfo['length'], ]
-                        );
+                        $magicId = $userapi->addMagic([
+                            'subtypeId'   => $subtypeId,
+                            'magicValue'  => $magicNumber,
+                            'magicOffset' => $magicInfo['offset'],
+                            'magicLength' => $magicInfo['length'],
+                        ]);
                     } else {
                         $magicId = $info['magicId'];
                     }

@@ -60,22 +60,14 @@ class ExtensionToMimeMethod extends MethodClass
         if (count($parts) < 2) {
             return 'application/octet-stream';
         }
+        $userapi = $this->getParent();
+
         $extension = $parts[count($parts) - 1];
-        $extensionInfo = xarMod::apiFunc(
-            'mime',
-            'user',
-            'get_extension',
-            ['extensionName' => $extension]
-        );
+        $extensionInfo = $userapi->getExtension(['extensionName' => $extension]);
         if (empty($extensionInfo)) {
             return 'application/octet-stream';
         }
-        $mimeType = xarMod::apiFunc(
-            'mime',
-            'user',
-            'get_mimetype',
-            ['subtypeId' => $extensionInfo['subtypeId']]
-        );
+        $mimeType = $userapi->getMimetype(['subtypeId' => (int) $extensionInfo['subtypeId']]);
         if (!empty($mimeType)) {
             return $mimeType;
         }

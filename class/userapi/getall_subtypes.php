@@ -43,9 +43,7 @@ class GetallSubtypesMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         extract($args);
-        /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
-        $userapi->setContext($this->getContext());
+        $userapi = $this->getParent();
 
         // The complete mime name can be passed in (type/subtype) and this
         // will be split up here for convenience.
@@ -57,19 +55,19 @@ class GetallSubtypesMethod extends MethodClass
         }
 
         // get type_id and type_name here too
-        $typelist = $userapi->getMimeTypes([], $this->getContext());
+        $typelist = $userapi->getMimeTypeList();
         $mimetypes = $typelist->items;
 
         // apply where clauses if relevant
         $args['where'] = [];
 
         if (isset($typeId) && is_int($typeId)) {
-            $args['where']['type'] = (int) $typeId;
+            $args['where']['type'] = $typeId;
             unset($args['typeId']);
         }
 
         if (isset($subtypeId) && is_int($subtypeId)) {
-            $args['where']['id'] = (int) $subtypeId;
+            $args['where']['id'] = $subtypeId;
             unset($args['subtypeId']);
         }
 
@@ -90,10 +88,10 @@ class GetallSubtypesMethod extends MethodClass
         }
 
         if (isset($state)) {
-            $args['where']['state'] = $state;
+            $args['where']['state'] = (int) $state;
             unset($args['state']);
         }
-        $objectlist = $userapi->getSubTypes($args);
+        $objectlist = $userapi->getSubTypeList($args);
 
         $subtypeInfo = [];
         foreach ($objectlist->items as $itemid => $item) {
@@ -102,11 +100,11 @@ class GetallSubtypesMethod extends MethodClass
                 $mimetype = $mimetypes[$item['type']];
             }
             $subtypeInfo[$item['id']] = [
-                'subtypeId'   => $item['id'],
-                'subtypeName' => $item['name'],
-                'subtypeDesc' => $item['description'],
-                'typeId'      => $mimetype['id'] ?? $item['type'],
-                'typeName'    => $mimetype['name'] ?? '',
+                'subtypeId'   => (int) $item['id'],
+                'subtypeName' => (string) $item['name'],
+                'subtypeDesc' => (string) $item['description'],
+                'typeId'      => (int) ($mimetype['id'] ?? $item['type']),
+                'typeName'    => (string) ($mimetype['name'] ?? ''),
             ];
         }
 

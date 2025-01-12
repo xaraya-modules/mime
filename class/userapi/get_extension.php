@@ -45,14 +45,12 @@ class GetExtensionMethod extends MethodClass
             $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_extension');
             throw new Exception($msg);
         }
-        /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
-        $userapi->setContext($this->getContext());
+        $userapi = $this->getParent();
 
         // apply where clauses if relevant
         if (isset($extensionId)) {
             $args['where'] = [
-                'id' => $extensionId,
+                'id' => (int) $extensionId,
             ];
             unset($args['extensionId']);
         } else {
@@ -61,16 +59,16 @@ class GetExtensionMethod extends MethodClass
             ];
             unset($args['extensionName']);
         }
-        $objectlist = $userapi->getExtensions($args);
+        $objectlist = $userapi->getExtensionList($args);
 
         $item = reset($objectlist->items);
         if (empty($item)) {
             return [];
         }
         return [
-            'subtypeId'     => $item['subtype_id'],
-            'extensionId'   => $item['id'],
-            'extensionName' => $item['name'],
+            'subtypeId'     => (int) $item['subtype'],
+            'extensionId'   => (int) $item['id'],
+            'extensionName' => (string) $item['name'],
         ];
     }
 }

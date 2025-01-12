@@ -45,14 +45,12 @@ class GetMagicMethod extends MethodClass
             $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId', 'userapi_get_magic', 'mime');
             throw new Exception($msg);
         }
-        /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
-        $userapi->setContext($this->getContext());
+        $userapi = $this->getParent();
 
         // apply where clauses if relevant
         if (isset($magicId)) {
             $args['where'] = [
-                'id' => $magicId,
+                'id' => (int) $magicId,
             ];
             unset($args['magicId']);
         } else {
@@ -62,18 +60,18 @@ class GetMagicMethod extends MethodClass
             ];
             unset($args['magicValue']);
         }
-        $objectlist = $userapi->getMagic($args);
+        $objectlist = $userapi->getMagicList($args);
 
         $item = reset($objectlist->items);
         if (empty($item)) {
             return [];
         }
         return [
-            'subtypeId'   => $item['subtype_id'],
-            'magicId'     => $item['id'],
-            'magicValue'  => $item['value'],
-            'magicOffset' => $item['offset'],
-            'magicLength' => $item['length'],
+            'subtypeId'   => (int) $item['subtype'],
+            'magicId'     => (int) $item['id'],
+            'magicValue'  => (string) $item['value'],
+            'magicOffset' => (int) $item['offset'],
+            'magicLength' => (int) $item['length'],
         ];
     }
 }

@@ -40,9 +40,10 @@ class GetSubtypeMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
+        $userapi = $this->getParent();
         // Farm the query off.
         // No need to duplicate the database query here.
-        $subtypes = xarMod::apiFunc('mime', 'user', 'getall_subtypes', $args);
+        $subtypes = $userapi->getallSubtypes($args);
 
         if (empty($subtypes)) {
             // No matches.

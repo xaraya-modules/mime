@@ -39,9 +39,9 @@ sys::import('modules.dynamicdata.class.traits.userapi');
  * @method mixed getSubtype(array $args)
  * @method mixed getType(array $args)
  * @method mixed getallExtensions(array $args)
- * @method mixed getallMagic(array $args)
- * @method mixed getallSubtypes(array $args)
- * @method mixed getallTypes(array $args)
+ * @method mixed getallMagic(array $args = [])
+ * @method mixed getallSubtypes(array $args = [])
+ * @method mixed getallTypes(array $args = [])
  * @method mixed importMimelist(array $args)
  * @method mixed mimeToExtension(array $args)
  * @extends UserApiClass<Module>
@@ -77,21 +77,21 @@ class UserApi implements UserApiInterface
     }
 
     /**
-     * Summary of getExtension
+     * Summary of getNewExtension
      * @param string $mimeType
      * @return string|null
      */
-    public function getExtension($mimeType)
+    public function getNewExtension($mimeType)
     {
         return static::getDetector()->getExtension($mimeType);
     }
 
     /**
-     * Summary of getMimeTypes
+     * Summary of getMimeTypeList
      * @param array<string, mixed> $args
      * @return DataObjectList|null
      */
-    public function getMimeTypes($args = [])
+    public function getMimeTypeList($args = [])
     {
         $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_types'], $this->context);
         if (!empty($args['where'])) {
@@ -104,11 +104,11 @@ class UserApi implements UserApiInterface
     }
 
     /**
-     * Summary of getSubTypes
+     * Summary of getSubTypeList
      * @param array<string, mixed> $args
      * @return DataObjectList|null
      */
-    public function getSubTypes($args = [])
+    public function getSubTypeList($args = [])
     {
         $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_subtypes'], $this->context);
         if (!empty($args['where'])) {
@@ -121,11 +121,11 @@ class UserApi implements UserApiInterface
     }
 
     /**
-     * Summary of getExtensions
+     * Summary of getExtensionList
      * @param array<string, mixed> $args
      * @return DataObjectList|null
      */
-    public function getExtensions($args = [])
+    public function getExtensionList($args = [])
     {
         $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_extensions'], $this->context);
         if (!empty($args['where'])) {
@@ -138,11 +138,11 @@ class UserApi implements UserApiInterface
     }
 
     /**
-     * Summary of getMagic
+     * Summary of getMagicList
      * @param array<string, mixed> $args
      * @return DataObjectList|null
      */
-    public function getMagic($args = [])
+    public function getMagicList($args = [])
     {
         $objectlist = DataObjectFactory::getObjectList(['name' => 'mime_magic'], $this->context);
         if (!empty($args['where'])) {
