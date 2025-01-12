@@ -33,11 +33,10 @@ class AnalyzeFileMethod extends MethodClass
      * MIME type of an unknown file.
      * (note: based off of the Magic class in Horde <www.horde.org>)
      * @todo replace with more recent equivalent - see MimeTypeDetector()
-     * @param array $args
-     * with
-     *     string $fileName      The path to the file to analyze.
-     *     string $altFileName   Alternate file name to analyze extension (Optional).
-     *     int    $skipTest      Skip a number of tests to verify methods (Optional).
+     * @param array<mixed> $args
+     * @var string $fileName The path to the file to analyze.
+     * @var string $altFileName Alternate file name to analyze extension (Optional).
+     * @var int $skipTest Skip a number of tests to verify methods (Optional).
      * @return string returns the mime type and optional charset of the file, or FALSE on error.
      * If it can't figure out the type based on the magic entries
      * it will try to guess one of either text/plain or

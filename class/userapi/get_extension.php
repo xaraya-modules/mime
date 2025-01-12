@@ -30,8 +30,7 @@ class GetExtensionMethod extends MethodClass
 
     /**
      * Get the name of an extension
-     * @param array $args
-     * with
+     * @param array<mixed> $args
      *     integer   extensionId       the ID of the extension to lookup   (optional)
      *     string    extensionName     the Name of the extension to lookup (optional)
      * @uses \UserApi::getExtensions()

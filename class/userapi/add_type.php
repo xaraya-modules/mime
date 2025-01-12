@@ -32,8 +32,7 @@ class AddTypeMethod extends MethodClass
      * Get all mime types
      * @author Carl P. Corliss
      * @access public
-     * @param array $args
-     * with
+     * @param array<mixed> $args
      *     integer    typeName  the Name of the mime type to lookup (optional)
      * @deprecated 1.5.0 use league/mime-type-detection instead
      * @return array|false An array of (typeId, typeName) or an empty array

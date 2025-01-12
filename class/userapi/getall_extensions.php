@@ -30,8 +30,7 @@ class GetallExtensionsMethod extends MethodClass
 
     /**
      * Get the name of a mime type
-     * @param array $args
-     * with
+     * @param array<mixed> $args
      *     integer    subtypeId       the subtype ID of the type to grab extensions for
      * @uses \UserApi::getExtensions()
      * @return array An array of (subtypeId, extension) or an empty array

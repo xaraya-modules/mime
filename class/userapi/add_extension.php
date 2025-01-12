@@ -32,10 +32,9 @@ class AddExtensionMethod extends MethodClass
      * Get the name of a mime type
      * @author Carl P. Corliss
      * @access public
-     * @param array $args
-     * with
-     *     integer    $subtypeId      the subtype ID to add an extension for
-     *     string     $extensionName  the extension name to add
+     * @param array<mixed> $args
+     * @var integer $subtypeId the subtype ID to add an extension for
+     * @var string $extensionName the extension name to add
      * @deprecated 1.5.0 use league/mime-type-detection instead
      * @return array|false An array of (subtypeId, extension) or an empty array
      */

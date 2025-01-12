@@ -33,8 +33,7 @@ class GetRevMimetypeMethod extends MethodClass
      * Get the typeId and subtypeId for a named mimeType (ie: application/octet-stream)
      * @author Carl P. Corliss
      * @access public
-     * @param array $args
-     * with
+     * @param array<mixed> $args
      *     string|int mimeType the mime type we want to lookup id's for
      * @return array An array of (typeId, subtypeId) or an empty array
      */

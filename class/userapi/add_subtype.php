@@ -32,11 +32,10 @@ class AddSubtypeMethod extends MethodClass
      * Get the name of a mime type
      * @author Carl P. Corliss
      * @access public
-     * @param array $args
-     * with
-     *     integer    $typeId      the type ID of the mime type to attch subtypes to
-     *     string     $subtypeName the name of the subtype to add
-     *     string     $subtypeDesc the description of the subtype to add
+     * @param array<mixed> $args
+     * @var integer $typeId the type ID of the mime type to attch subtypes to
+     * @var string $subtypeName the name of the subtype to add
+     * @var string $subtypeDesc the description of the subtype to add
      * @deprecated 1.5.0 use league/mime-type-detection instead
      * @return array|false false on error, the sub type id otherwise
      */

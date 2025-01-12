@@ -32,8 +32,7 @@ class GetMimetypeMethod extends MethodClass
      * Get the name of a mime type
      * @author Carl P. Corliss
      * @access public
-     * @param array $args
-     * with
+     * @param array<mixed> $args
      *      integer    subtypeId   the subtypeID of the mime subtype to lookup (optional)
      *      integer    subtypeName the Name of the mime sub type to lookup (optional)
      * @deprecated 1.5.0 use league/mime-type-detection instead

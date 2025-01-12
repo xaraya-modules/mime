@@ -49,10 +49,9 @@ class ArraySearchRMethod extends MethodClass
      *      $$var = 'something else';
      * @author Richard Sumilang      <richard@richard-sumilang.com> (original author)
      * @author Carl P. Corliss <carl.corliss@xaraya.com>
-     * @param array $args
-     * with
-     *     string    $needle     What are you searching for?
-     *     array     $haystack   What you want to search in
+     * @param array<mixed> $args
+     * @var string $needle What are you searching for?
+     * @var array $haystack What you want to search in
      * @return array|false array of keys or FALSE if not found.
      * @access public
      */

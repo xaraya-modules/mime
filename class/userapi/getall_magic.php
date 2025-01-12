@@ -30,8 +30,7 @@ class GetallMagicMethod extends MethodClass
 
     /**
      * Get the magic number(s) for a particular mime subtype
-     * @param array $args
-     * with
+     * @param array<mixed> $args
      *     integer    subtypeId   the magicId of the magic # to lookup   (optional)
      * @uses \UserApi::getMagic()
      * @return array An array of (subtypeid, magicId, magic, offset, length) or an empty array

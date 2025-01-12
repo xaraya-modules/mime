@@ -30,8 +30,7 @@ class GetallSubtypesMethod extends MethodClass
 
     /**
      * Get details for mime subtypes
-     * @param array $args
-     * with
+     * @param array<mixed> $args
      *     integer    typeId the type ID of the mime type to grab subtypes for
      *     integer    subtypeId the subtype ID of the mime type, which should fetch just one subtype
      *     string     subtypeName the subtype name of the mime type, which should fetch just one subtype

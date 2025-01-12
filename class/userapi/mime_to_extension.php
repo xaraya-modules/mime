@@ -33,9 +33,8 @@ class MimeToExtensionMethod extends MethodClass
      * If we cannot map the type to a file extension, we return false.
      *
      * Code originally based on hordes Magic class (www.horde.org)
-     * @param array $args
-     * with
-     *     string $mime_type MIME type to be mapped to a file extension.
+     * @param array<mixed> $args
+     * @var string $mime_type MIME type to be mapped to a file extension.
      * @return string The file extension of the MIME type.
      */
     public function __invoke(array $args = [])
