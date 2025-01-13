@@ -33,6 +33,7 @@ class ViewMethod extends MethodClass
      * Summary of view
      * @param array<string, mixed> $args
      * @return array<mixed>|void
+     * @see AdminGui::view()
      */
     public function __invoke(array $args = [])
     {

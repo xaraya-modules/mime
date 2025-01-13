@@ -33,9 +33,10 @@ class AddMagicMethod extends MethodClass
      * @author Carl P. Corliss
      * @access public
      * @param array<mixed> $args
-     *     integer    subtypeId   the magicId of the magic # to lookup   (optional)788888888888888888888890
+     * @var integer $subtypeId   the magicId of the magic # to lookup   (optional)788888888888888888888890
      * @deprecated 1.5.0 use league/mime-type-detection instead
      * @return array|false An array of (subtypeid, magicId, magic, offset, length) or an empty array
+     * @see UserApi::addMagic()
      */
     public function __invoke(array $args = [])
     {

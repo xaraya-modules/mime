@@ -19,7 +19,7 @@ sys::import('xaraya.modules.adminapi');
 /**
  * Handle the mime admin API
  *
- * @method mixed getmenulinks(array $args)
+ * @method mixed getmenulinks(array $args = []) Return the options for the admin menu
  * @extends AdminApiClass<Module>
  */
 class AdminApi extends AdminApiClass

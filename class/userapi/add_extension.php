@@ -37,6 +37,7 @@ class AddExtensionMethod extends MethodClass
      * @var string $extensionName the extension name to add
      * @deprecated 1.5.0 use league/mime-type-detection instead
      * @return array|false An array of (subtypeId, extension) or an empty array
+     * @see UserApi::addExtension()
      */
     public function __invoke(array $args = [])
     {

@@ -36,6 +36,7 @@ class MimeToExtensionMethod extends MethodClass
      * @param array<mixed> $args
      * @var string $mime_type MIME type to be mapped to a file extension.
      * @return string The file extension of the MIME type.
+     * @see UserApi::mimeToExtension()
      */
     public function __invoke(array $args = [])
     {

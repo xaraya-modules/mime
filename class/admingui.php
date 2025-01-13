@@ -23,11 +23,11 @@ sys::import('xaraya.modules.admingui');
 /**
  * Handle the mime admin GUI
  *
- * @method mixed delete(array $args)
- * @method mixed main(array $args)
- * @method mixed modify(array $args)
- * @method mixed new(array $args)
- * @method mixed view(array $args)
+ * @method mixed delete(array $args = [])
+ * @method mixed main(array $args = []) Main admin GUI function, entry point
+ * @method mixed modify(array $args = [])
+ * @method mixed new(array $args = [])
+ * @method mixed view(array $args = [])
  * @extends AdminGuiClass<Module>
  */
 class AdminGui extends AdminGuiClass

@@ -31,9 +31,10 @@ class GetallTypesMethod extends MethodClass
     /**
      * Get all mime types
      * @param array<mixed> $args
-     *     integer    state    the state of the mime type to lookup   (optional)
-     * @uses \UserApi::getMimeTypes()
+     * @var integer    $state    the state of the mime type to lookup   (optional)
+     * @uses UserApi::getMimeTypeList()
      * @return array An array of (typeId, typeName) or an empty array
+     * @see UserApi::getallTypes()
      */
     public function __invoke(array $args = [])
     {

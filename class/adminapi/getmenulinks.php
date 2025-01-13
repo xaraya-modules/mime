@@ -30,6 +30,7 @@ class GetmenulinksMethod extends MethodClass
 
     /**
      * Return the options for the admin menu
+     * @see AdminApi::getmenulinks()
      */
     public function __invoke(array $args = [])
     {

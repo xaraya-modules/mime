@@ -34,8 +34,9 @@ class GetRevMimetypeMethod extends MethodClass
      * @author Carl P. Corliss
      * @access public
      * @param array<mixed> $args
-     *     string|int mimeType the mime type we want to lookup id's for
+     * @var string|int $mimeType the mime type we want to lookup id's for
      * @return array An array of (typeId, subtypeId) or an empty array
+     * @see UserApi::getRevMimetype()
      */
     public function __invoke(array $args = [])
     {

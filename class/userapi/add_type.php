@@ -33,9 +33,10 @@ class AddTypeMethod extends MethodClass
      * @author Carl P. Corliss
      * @access public
      * @param array<mixed> $args
-     *     integer    typeName  the Name of the mime type to lookup (optional)
+     * @var integer $typeName  the Name of the mime type to lookup (optional)
      * @deprecated 1.5.0 use league/mime-type-detection instead
      * @return array|false An array of (typeId, typeName) or an empty array
+     * @see UserApi::addType()
      */
     public function __invoke(array $args = [])
     {

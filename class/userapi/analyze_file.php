@@ -41,6 +41,7 @@ class AnalyzeFileMethod extends MethodClass
      * If it can't figure out the type based on the magic entries
      * it will try to guess one of either text/plain or
      * application/octet-stream by reading the first 256 bytes of the file
+     * @see UserApi::analyzeFile()
      */
     public function __invoke(array $args = [])
     {

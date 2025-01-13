@@ -28,6 +28,12 @@ class ImportMimelistMethod extends MethodClass
 {
     /** functions imported by bermuda_cleanup */
 
+    /**
+     * Summary of __invoke
+     * @param array<mixed> $args
+     * @return bool
+     * @see UserApi::importMimelist()
+     */
     public function __invoke(array $args = [])
     {
         extract($args);

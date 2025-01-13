@@ -54,6 +54,7 @@ class ArraySearchRMethod extends MethodClass
      * @var array $haystack What you want to search in
      * @return array|false array of keys or FALSE if not found.
      * @access public
+     * @see UserApi::arraySearchR()
      */
     public function __invoke(array $args = [])
     {

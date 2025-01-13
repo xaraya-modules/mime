@@ -31,10 +31,11 @@ class GetExtensionMethod extends MethodClass
     /**
      * Get the name of an extension
      * @param array<mixed> $args
-     *     integer   extensionId       the ID of the extension to lookup   (optional)
-     *     string    extensionName     the Name of the extension to lookup (optional)
-     * @uses \UserApi::getExtensions()
+     * @var integer   $extensionId       the ID of the extension to lookup   (optional)
+     * @var string    $extensionName     the Name of the extension to lookup (optional)
+     * @uses UserApi::getExtensionList()
      * @return array An array of (subtypeId, extension) or an empty array
+     * @see UserApi::getExtension()
      */
     public function __invoke(array $args = [])
     {

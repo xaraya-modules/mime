@@ -33,6 +33,9 @@ class ModifyMethod extends MethodClass
 {
     /** functions imported by bermuda_cleanup */
 
+    /**
+     * @see AdminGui::modify()
+     */
     public function __invoke(array $args = [])
     {
         if (!xarSecurity::check('EditMime')) {

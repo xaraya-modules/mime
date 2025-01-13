@@ -33,10 +33,11 @@ class GetMimeImageMethod extends MethodClass
      * If no image file exists for the given mimtype, the unknown image file
      * will be used.
      * @param array<mixed> $args
-     *     string mimeType     The mime type to find a correlating image for
-     *     string fileSuffix   Image file suffix list (default: '.png')
-     *     string defaultBase  Default file base name (default: 'default')
+     * @var string $mimeType     The mime type to find a correlating image for
+     * @var string $fileSuffix   Image file suffix list (default: '.png')
+     * @var string $defaultBase  Default file base name (default: 'default')
      * @return string
+     * @see UserApi::getMimeImage()
      */
     public function __invoke(array $args = [])
     {

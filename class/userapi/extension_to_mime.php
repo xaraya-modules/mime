@@ -37,6 +37,7 @@ class ExtensionToMimeMethod extends MethodClass
      * @param array<mixed> $args
      * @var string $fileName Filename to grab fileName and check for mimetype for..
      * @return string|bool mime-type or FALSE with exception on error, FALSE and no exception if unknown mime-type
+     * @see UserApi::extensionToMime()
      */
     public function __invoke(array $args = [])
     {

@@ -38,6 +38,7 @@ class AddSubtypeMethod extends MethodClass
      * @var string $subtypeDesc the description of the subtype to add
      * @deprecated 1.5.0 use league/mime-type-detection instead
      * @return array|false false on error, the sub type id otherwise
+     * @see UserApi::addSubtype()
      */
     public function __invoke(array $args = [])
     {

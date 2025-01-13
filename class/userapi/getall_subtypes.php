@@ -31,13 +31,14 @@ class GetallSubtypesMethod extends MethodClass
     /**
      * Get details for mime subtypes
      * @param array<mixed> $args
-     *     integer    typeId the type ID of the mime type to grab subtypes for
-     *     integer    subtypeId the subtype ID of the mime type, which should fetch just one subtype
-     *     string     subtypeName the subtype name of the mime type, which should fetch just one subtype
-     *     string     typeName the type name of the mime type
-     *     string     mimeName the full two-part mime name
-     * @uses \UserApi::getSubTypes()
+     * @var integer    $typeId the type ID of the mime type to grab subtypes for
+     * @var integer    $subtypeId the subtype ID of the mime type, which should fetch just one subtype
+     * @var string     $subtypeName the subtype name of the mime type, which should fetch just one subtype
+     * @var string     $typeName the type name of the mime type
+     * @var string     $mimeName the full two-part mime name
+     * @uses UserApi::getSubTypeList()
      * @return array An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
+     * @see UserApi::getallSubtypes()
      */
     public function __invoke(array $args = [])
     {

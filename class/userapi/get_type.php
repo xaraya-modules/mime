@@ -31,10 +31,11 @@ class GetTypeMethod extends MethodClass
     /**
      * Get the name of a mime type
      * @param array<mixed> $args
-     *     integer    typeId   the ID of the mime type to lookup   (optional)
-     *     string     typeName the Name of the mime type to lookup (optional)
+     * @var integer    $typeId   the ID of the mime type to lookup   (optional)
+     * @var string     $typeName the Name of the mime type to lookup (optional)
      * @uses \UserApi::getMimeTypes()
      * @return array An array of (typeId, typeName) or an empty array
+     * @see UserApi::getType()
      */
     public function __invoke(array $args = [])
     {

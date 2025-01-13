@@ -33,6 +33,9 @@ class NewMethod extends MethodClass
 {
     /** functions imported by bermuda_cleanup */
 
+    /**
+     * @see AdminGui::new()
+     */
     public function __invoke(array $args = [])
     {
         if (!xarSecurity::check('AddMime')) {
