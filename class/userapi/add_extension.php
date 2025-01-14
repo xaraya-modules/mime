@@ -44,7 +44,7 @@ class AddExtensionMethod extends MethodClass
         extract($args);
 
         if (!isset($subtypeId)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                 'subtypeId',
                 'userapi_add_extension',
@@ -54,7 +54,7 @@ class AddExtensionMethod extends MethodClass
         }
 
         if (!isset($extensionName)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                 'extensionName',
                 'userapi_add_extension',

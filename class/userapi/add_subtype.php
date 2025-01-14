@@ -45,7 +45,7 @@ class AddSubtypeMethod extends MethodClass
         extract($args);
 
         if (!isset($typeId)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                 'typeId',
                 'userapi_add_subtypes',
@@ -55,7 +55,7 @@ class AddSubtypeMethod extends MethodClass
         }
 
         if (!isset($subtypeName)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                 'subtypeName',
                 'userapi_add_subtype',

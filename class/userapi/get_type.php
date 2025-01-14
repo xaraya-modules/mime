@@ -33,7 +33,7 @@ class GetTypeMethod extends MethodClass
      * @param array<mixed> $args
      * @var integer    $typeId   the ID of the mime type to lookup   (optional)
      * @var string     $typeName the Name of the mime type to lookup (optional)
-     * @uses \UserApi::getMimeTypes()
+     * @uses UserApi::getMimeTypes()
      * @return array An array of (typeId, typeName) or an empty array
      * @see UserApi::getType()
      */
@@ -42,7 +42,7 @@ class GetTypeMethod extends MethodClass
         extract($args);
 
         if (!isset($typeId) && !isset($typeName)) {
-            $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_type');
+            $msg = $this->translate('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_type');
             throw new Exception($msg);
         }
         $userapi = $this->getParent();

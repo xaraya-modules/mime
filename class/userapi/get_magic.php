@@ -42,7 +42,7 @@ class GetMagicMethod extends MethodClass
         extract($args);
 
         if (!isset($magicId) && !isset($magicValue)) {
-            $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId', 'userapi_get_magic', 'mime');
+            $msg = $this->translate('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId', 'userapi_get_magic', 'mime');
             throw new Exception($msg);
         }
         $userapi = $this->getParent();

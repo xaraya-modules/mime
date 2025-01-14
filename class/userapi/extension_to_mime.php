@@ -44,7 +44,7 @@ class ExtensionToMimeMethod extends MethodClass
         extract($args);
 
         if (!isset($fileName) || empty($fileName)) {
-            $msg = xarML('Missing fileName parameter!');
+            $msg = $this->translate('Missing fileName parameter!');
             throw new Exception($msg);
         }
 

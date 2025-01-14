@@ -45,7 +45,7 @@ class GetMimeImageMethod extends MethodClass
 
         if (!isset($mimeType)) {
             // API location handled centrally.
-            $msg = xarML('Missing parameter [#(1)].', 'mimeType');
+            $msg = $this->translate('Missing parameter [#(1)].', 'mimeType');
             throw new Exception($msg);
         }
 

@@ -41,7 +41,7 @@ class ViewMethod extends MethodClass
             return;
         }
         // Define which object will be shown
-        if (!$this->fetchVar('objectname', 'str', $args['objectname'], null, xarVar::DONT_SET)) {
+        if (!$this->fetch('objectname', 'str', $args['objectname'], null, xarVar::DONT_SET)) {
             // Pass along the context for xarTpl::module() if needed
             $args['context'] ??= $this->getContext();
             return $args;
@@ -49,9 +49,9 @@ class ViewMethod extends MethodClass
         /** @var UserApi $userapi */
         $userapi = $this->getAPI();
         if (!empty($args['objectname'])) {
-            xarModUserVars::set($this->moduleName, 'defaultmastertable', $args['objectname']);
+            xarModUserVars::set($this->getModName(), 'defaultmastertable', $args['objectname']);
         }
-        $args['objectname'] = xarModUserVars::get($this->moduleName, 'defaultmastertable');
+        $args['objectname'] = xarModUserVars::get($this->getModName(), 'defaultmastertable');
         $args['object'] = match ($args['objectname']) {
             'mime_types'      => $userapi->getMimeTypeList(),
             'mime_subtypes'   => $userapi->getSubTypeList(),

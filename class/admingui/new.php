@@ -38,29 +38,29 @@ class NewMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
-        if (!xarSecurity::check('AddMime')) {
+        if (!$this->checkAccess('AddMime')) {
             return;
         }
 
-        if (!xarVar::fetch('name', 'str', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('name', 'str', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
         $data['object'] = DataObjectFactory::getObject(['name' => $name]);
         $data['tplmodule'] = 'mime';
-        $data['authid'] = xarSec::genAuthKey('mime');
+        $data['authid'] = $this->genAuthKey();
 
         if ($data['confirm']) {
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
+            if (!$this->fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
                 return;
             }
 
             // Check for a valid confirmation key
-            if (!xarSec::confirmAuthKey()) {
+            if (!$this->confirmAuthKey()) {
                 return;
             }
 
@@ -76,7 +76,7 @@ class NewMethod extends MethodClass
                 $itemid = $data['object']->createItem();
 
                 // Jump to the next page
-                xarController::redirect(xarController::URL('mime', 'admin', 'view'), null, $this->getContext());
+                $this->redirect($this->getUrl('admin', 'view'));
                 return true;
             }
         }

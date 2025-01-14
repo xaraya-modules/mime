@@ -38,17 +38,17 @@ class ModifyMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
-        if (!xarSecurity::check('EditMime')) {
+        if (!$this->checkAccess('EditMime')) {
             return;
         }
 
-        if (!xarVar::fetch('name', 'str', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('name', 'str', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -56,11 +56,11 @@ class ModifyMethod extends MethodClass
         $data['object']->getItem(['itemid' => $data['itemid']]);
 
         $data['tplmodule'] = 'mime';
-        $data['authid'] = xarSec::genAuthKey('mime');
+        $data['authid'] = $this->genAuthKey();
 
         if ($data['confirm']) {
             // Check for a valid confirmation key
-            if (!xarSec::confirmAuthKey()) {
+            if (!$this->confirmAuthKey()) {
                 return;
             }
 
@@ -76,7 +76,7 @@ class ModifyMethod extends MethodClass
                 $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
 
                 // Jump to the next page
-                xarController::redirect(xarController::URL('mime', 'admin', 'view'), null, $this->getContext());
+                $this->redirect($this->getUrl('admin', 'view'));
                 return true;
             }
         }

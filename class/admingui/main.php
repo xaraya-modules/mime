@@ -36,16 +36,16 @@ class MainMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
-        xarController::redirect(xarController::URL('mime', 'admin', 'view'), null, $this->getContext());
+        $this->redirect($this->getUrl('admin', 'view'));
 
-        if (!xarSecurity::check('ManageMime')) {
+        if (!$this->checkAccess('ManageMime')) {
             return;
         }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return [];
         } else {
-            xarController::redirect(xarController::URL('mime', 'admin', 'view'), null, $this->getContext());
+            $this->redirect($this->getUrl('admin', 'view'));
         }
         // success
         return true;

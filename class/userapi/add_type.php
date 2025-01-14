@@ -47,7 +47,7 @@ class AddTypeMethod extends MethodClass
         $xartable     = & xarDB::getTables();
 
         if (!isset($typeName) || empty($typeName)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                 'typeName',
                 'userapi_add_type',
