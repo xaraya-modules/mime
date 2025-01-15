@@ -32,15 +32,5 @@ sys::import('xaraya.modules.admingui');
  */
 class AdminGui extends AdminGuiClass
 {
-    /**
-     * Summary of main
-     * @param array<string, mixed> $args
-     * @return array<mixed>
-     */
-    public function main(array $args = [])
-    {
-        // Pass along the context for xarTpl::module() if needed
-        $args['context'] ??= $this->getContext();
-        return $args;
-    }
+    // ...
 }
