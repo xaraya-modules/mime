@@ -46,8 +46,11 @@ class ViewMethod extends MethodClass
             $args['context'] ??= $this->getContext();
             return $args;
         }
+        $admingui = $this->getParent();
+
         /** @var UserApi $userapi */
-        $userapi = $this->getAPI();
+        $userapi = $admingui->getAPI();
+
         if (!empty($args['objectname'])) {
             xarModUserVars::set($this->getModName(), 'defaultmastertable', $args['objectname']);
         }
