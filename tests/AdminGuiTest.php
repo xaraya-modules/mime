@@ -91,9 +91,11 @@ final class AdminGuiTest extends TestCase
     public function testViewMethod(): void
     {
         $context = null;
+        $parent = xarMod::getModule('mime')->getAdminGUI();
         /** @var ViewMethod $viewmethod */
         $viewmethod = $this->createMockClassWithAccess('mime', ViewMethod::class, 1);
         $viewmethod->setContext($context);
+        $viewmethod->setParent($parent);
 
         // use __invoke() here
         $args = ['hello' => 'world'];
