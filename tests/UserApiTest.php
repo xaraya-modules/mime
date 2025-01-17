@@ -1,44 +1,16 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use Xaraya\Context\Context;
-use Xaraya\Context\SessionContext;
+use Xaraya\Modules\TestHelper;
 use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\Mime\MimeTypeDetector;
 
-//use Xaraya\Sessions\SessionHandler;
-
-final class UserApiTest extends TestCase
+final class UserApiTest extends TestHelper
 {
-    protected static $oldDir;
-
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        // initialize bootstrap
-        sys::init();
-        // initialize caching - delay until we need results
-        xarCache::init();
-        // initialize loggers
-        xarLog::init();
-        // initialize database - delay until caching fails
-        xarDatabase::init();
-        // initialize modules
-        //xarMod::init();
-        // initialize users
-        //xarUser::init();
-        xarSession::setSessionClass(SessionContext::class);
-
         // file paths are relative to parent directory
-        static::$oldDir = getcwd();
         chdir(dirname(__DIR__));
     }
-
-    public static function tearDownAfterClass(): void
-    {
-        chdir(static::$oldDir);
-    }
-
-    protected function setUp(): void {}
 
     protected function tearDown(): void {}
 
@@ -72,15 +44,18 @@ final class UserApiTest extends TestCase
     /**
      * @dataProvider provideFileResults
      */
-    public function testCheckFileType($path, $expectedContent, $expectedExtension): void
+    public function testCheckFileType($path, $expectedMimeType, $expectedAlternative): void
     {
         /** @var UserApi $userapi */
         $userapi = xarMod::getAPI('mime');
         $mimeType = $userapi->checkFileType($path);
-        if ($expectedContent == 'text/plain') {
-            $expected = $expectedExtension;
+        if ($expectedMimeType == 'text/plain') {
+            $expected = $expectedAlternative;
+        } elseif (!file_exists($path)) {
+            // if file does not exist, we should expect the alternative
+            $expected = $expectedAlternative;
         } else {
-            $expected = $expectedContent;
+            $expected = $expectedMimeType;
         }
         $this->assertEquals($expected, $mimeType);
     }
@@ -365,6 +340,12 @@ final class UserApiTest extends TestCase
     public function testAnalyzeFile($path, $mimeType, $alternative): void
     {
         $expected = $mimeType;
+
+        if (!file_exists($path)) {
+            $this->expectException(Exception::class);
+            $expected = "Unable to retrieve mime type. File does not exist!";
+            $this->expectExceptionMessage($expected);
+        }
 
         /** @var UserApi $userapi */
         $userapi = xarMod::getAPI('mime');

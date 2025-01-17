@@ -11,10 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
-
 use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
-use xarMod;
 use sys;
 use Exception;
 
@@ -49,6 +47,10 @@ class AnalyzeFileMethod extends MethodClass
 
         if (!isset($fileName)) {
             $msg = $this->translate('Unable to retrieve mime type. No filename supplied!');
+            throw new Exception($msg);
+        }
+        if (!file_exists($fileName)) {
+            $msg = $this->translate('Unable to retrieve mime type. File does not exist!');
             throw new Exception($msg);
         }
 

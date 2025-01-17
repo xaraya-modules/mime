@@ -1,11 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Xaraya\Context\Context;
-use Xaraya\Context\SessionContext;
 use Xaraya\Modules\Mime\MimeTypeDetector;
-
-//use Xaraya\Sessions\SessionHandler;
 
 final class MimeTypeDetectorTest extends TestCase
 {
