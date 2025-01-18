@@ -38,17 +38,17 @@ class ModifyMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
-        if (!$this->checkAccess('EditMime')) {
+        if (!$this->sec()->checkAccess('EditMime')) {
             return;
         }
 
-        if (!$this->fetch('name', 'str', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('name', $name, 'str', 'mime_types')) {
             return;
         }
-        if (!$this->fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('itemid', $data['itemid'], 'int', 0)) {
             return;
         }
-        if (!$this->fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('confirm', $data['confirm'], 'bool', false)) {
             return;
         }
 
@@ -56,11 +56,11 @@ class ModifyMethod extends MethodClass
         $data['object']->getItem(['itemid' => $data['itemid']]);
 
         $data['tplmodule'] = 'mime';
-        $data['authid'] = $this->genAuthKey();
+        $data['authid'] = $this->sec()->genAuthKey();
 
         if ($data['confirm']) {
             // Check for a valid confirmation key
-            if (!$this->confirmAuthKey()) {
+            if (!$this->sec()->confirmAuthKey()) {
                 return;
             }
 
@@ -70,13 +70,13 @@ class ModifyMethod extends MethodClass
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
                 $data['context'] ??= $this->getContext();
-                return xarTpl::module('mime', 'admin', 'modify', $data);
+                return $this->mod()->template('modify', $data);
             } else {
                 // Good data: create the item
                 $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
 
                 // Jump to the next page
-                $this->redirect($this->getUrl('admin', 'view'));
+                $this->ctl()->redirect($this->mod()->getURL('admin', 'view'));
                 return true;
             }
         }

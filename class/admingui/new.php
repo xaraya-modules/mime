@@ -38,29 +38,29 @@ class NewMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
-        if (!$this->checkAccess('AddMime')) {
+        if (!$this->sec()->checkAccess('AddMime')) {
             return;
         }
 
-        if (!$this->fetch('name', 'str', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('name', $name, 'str', 'mime_types')) {
             return;
         }
-        if (!$this->fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('confirm', $data['confirm'], 'bool', false)) {
             return;
         }
 
         $data['object'] = DataObjectFactory::getObject(['name' => $name]);
         $data['tplmodule'] = 'mime';
-        $data['authid'] = $this->genAuthKey();
+        $data['authid'] = $this->sec()->genAuthKey();
 
         if ($data['confirm']) {
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if (!$this->fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
+            if (!$this->var()->check('preview', $preview, 'str')) {
                 return;
             }
 
             // Check for a valid confirmation key
-            if (!$this->confirmAuthKey()) {
+            if (!$this->sec()->confirmAuthKey()) {
                 return;
             }
 
@@ -70,13 +70,13 @@ class NewMethod extends MethodClass
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
                 $data['context'] ??= $this->getContext();
-                return xarTpl::module('mime', 'admin', 'new', $data);
+                return $this->mod()->template('new', $data);
             } else {
                 // Good data: create the item
                 $itemid = $data['object']->createItem();
 
                 // Jump to the next page
-                $this->redirect($this->getUrl('admin', 'view'));
+                $this->ctl()->redirect($this->mod()->getURL('admin', 'view'));
                 return true;
             }
         }

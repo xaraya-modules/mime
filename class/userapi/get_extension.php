@@ -42,7 +42,7 @@ class GetExtensionMethod extends MethodClass
         extract($args);
 
         if (!isset($extensionId) && !isset($extensionName)) {
-            $msg = $this->translate('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_extension');
+            $msg = $this->ml('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_extension');
             throw new Exception($msg);
         }
         $userapi = $this->getParent();

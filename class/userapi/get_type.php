@@ -42,7 +42,7 @@ class GetTypeMethod extends MethodClass
         extract($args);
 
         if (!isset($typeId) && !isset($typeName)) {
-            $msg = $this->translate('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_type');
+            $msg = $this->ml('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_type');
             throw new Exception($msg);
         }
         $userapi = $this->getParent();

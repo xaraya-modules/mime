@@ -52,7 +52,7 @@ class GetSubtypeMethod extends MethodClass
 
         if (count($subtypes) > 1) {
             // Too many matches.
-            $msg = $this->translate('Too many matches to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_subtype');
+            $msg = $this->ml('Too many matches to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_subtype');
             throw new Exception($msg);
         }
 

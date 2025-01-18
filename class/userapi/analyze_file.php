@@ -46,11 +46,11 @@ class AnalyzeFileMethod extends MethodClass
         extract($args);
 
         if (!isset($fileName)) {
-            $msg = $this->translate('Unable to retrieve mime type. No filename supplied!');
+            $msg = $this->ml('Unable to retrieve mime type. No filename supplied!');
             throw new Exception($msg);
         }
         if (!file_exists($fileName)) {
-            $msg = $this->translate('Unable to retrieve mime type. File does not exist!');
+            $msg = $this->ml('Unable to retrieve mime type. File does not exist!');
             throw new Exception($msg);
         }
 
@@ -112,7 +112,7 @@ class AnalyzeFileMethod extends MethodClass
         }
         // Otherwise, actually test the contents of the file
         if (!($fp = @fopen($fileName, 'rb'))) {
-            $msg = $this->translate('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
+            $msg = $this->ml('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
             throw new Exception($msg);
         } else {
             $mime_list = $userapi->getallMagic();
@@ -135,7 +135,7 @@ class AnalyzeFileMethod extends MethodClass
 
                     if ($magicInfo['offset'] >= 0) {
                         if (@fseek($fp, $magicInfo['offset'], SEEK_SET)) {
-                            $msg = $this->translate(
+                            $msg = $this->ml(
                                 'Unable to seek to offset [#(1)] within file: [#(2)]',
                                 $magicInfo['offset'],
                                 $fileName
@@ -145,7 +145,7 @@ class AnalyzeFileMethod extends MethodClass
                     }
 
                     if (!($value = @fread($fp, $magicInfo['length']))) {
-                        $msg = $this->translate(
+                        $msg = $this->ml(
                             'Unable to read (#(1) bytes) from file: [#(2)].',
                             $magicInfo['length'],
                             $fileName
@@ -174,12 +174,12 @@ class AnalyzeFileMethod extends MethodClass
             }
 
             if (!rewind($fp)) {
-                $msg = $this->translate('Unable to rewind to beginning of file: [#(1)]', $fileName);
+                $msg = $this->ml('Unable to rewind to beginning of file: [#(1)]', $fileName);
                 throw new Exception($msg);
             }
 
             if (!($value = @fread($fp, 256))) {
-                $msg = $this->translate('Unable to read (256 bytes) from file: [#(1)]', $fileName);
+                $msg = $this->ml('Unable to read (256 bytes) from file: [#(1)]', $fileName);
                 throw new Exception($msg);
             }
 

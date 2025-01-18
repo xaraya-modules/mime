@@ -44,7 +44,7 @@ class GetMimetypeMethod extends MethodClass
         extract($args);
 
         if (!isset($subtypeId) && !isset($subtypeName)) {
-            $msg = $this->translate('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_subtype');
+            $msg = $this->ml('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_subtype');
             throw new Exception($msg);
         }
         $userapi = $this->getParent();

@@ -43,13 +43,13 @@ class MimeToExtensionMethod extends MethodClass
         extract($args);
 
         if (!isset($mime_type) || empty($mime_type)) {
-            $msg = $this->translate('Missing \'mime_type\' parameter!');
+            $msg = $this->ml('Missing \'mime_type\' parameter!');
             throw new Exception($msg);
         }
 
         $typeparts = explode('/', $mime_type);
         if (count($typeparts) < 2) {
-            $msg = $this->translate('Missing mime type or subtype parameter!');
+            $msg = $this->ml('Missing mime type or subtype parameter!');
             throw new Exception($msg);
         }
         $userapi = $this->getParent();

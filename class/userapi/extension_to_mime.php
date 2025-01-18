@@ -44,7 +44,7 @@ class ExtensionToMimeMethod extends MethodClass
         extract($args);
 
         if (!isset($fileName) || empty($fileName)) {
-            $msg = $this->translate('Missing fileName parameter!');
+            $msg = $this->ml('Missing fileName parameter!');
             throw new Exception($msg);
         }
 

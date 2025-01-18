@@ -37,17 +37,17 @@ class DeleteMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
-        if (!$this->checkAccess('ManageMime')) {
+        if (!$this->sec()->checkAccess('ManageMime')) {
             return;
         }
 
-        if (!$this->fetch('name', 'str:1', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('name', $name, 'str:1', 'mime_types')) {
             return;
         }
-        if (!$this->fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('itemid', $data['itemid'], 'int', '')) {
             return;
         }
-        if (!$this->fetch('confirm', 'str:1', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('confirm', $data['confirm'], 'str:1', false)) {
             return;
         }
 
@@ -55,11 +55,11 @@ class DeleteMethod extends MethodClass
         $data['object']->getItem(['itemid' => $data['itemid']]);
 
         $data['tplmodule'] = 'mime';
-        $data['authid'] = $this->genAuthKey();
+        $data['authid'] = $this->sec()->genAuthKey();
 
         if ($data['confirm']) {
             // Check for a valid confirmation key
-            if (!$this->confirmAuthKey()) {
+            if (!$this->sec()->confirmAuthKey()) {
                 return;
             }
 
@@ -67,7 +67,7 @@ class DeleteMethod extends MethodClass
             $item = $data['object']->deleteItem();
 
             // Jump to the next page
-            $this->redirect($this->getUrl('admin', 'view'));
+            $this->ctl()->redirect($this->mod()->getURL('admin', 'view'));
             return true;
         }
         return $data;

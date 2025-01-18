@@ -49,7 +49,7 @@ class GetallMagicMethod extends MethodClass
                 ];
                 unset($args['subtypeId']);
             } else {
-                $msg = $this->translate(
+                $msg = $this->ml(
                     'Supplied parameter [#(1)] for function [#(2)], is not an integer!',
                     'subtypeId',
                     'mime_userapi_getall_magic'

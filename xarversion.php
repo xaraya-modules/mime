@@ -14,7 +14,7 @@
 $modversion['name']           = 'mime';
 $modversion['id']             = '999';
 $modversion['version']        = '2.6.0';
-$modversion['displayname']    = xarML('Mime');
+$modversion['displayname']    = xarMLS::translate('Mime');
 $modversion['description']    = 'Hook based module that returns the content-type of a given file.';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

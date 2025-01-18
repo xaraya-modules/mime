@@ -37,11 +37,11 @@ class ViewMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
-        if (!$this->checkAccess('ManageMime')) {
+        if (!$this->sec()->checkAccess('ManageMime')) {
             return;
         }
         // Define which object will be shown
-        if (!$this->fetch('objectname', 'str', $args['objectname'], null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('objectname', $args['objectname'], 'str')) {
             // Pass along the context for xarTpl::module() if needed
             $args['context'] ??= $this->getContext();
             return $args;
