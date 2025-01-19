@@ -21,17 +21,26 @@ final class AdminGuiTest extends TestHelper
     {
         $context = $this->createContext(['source' => __METHOD__]);
         /** @var AdminGui $admingui */
-        $admingui = $this->createMockWithAccess('mime', AdminGui::class, 0);
+        $admingui = $this->createMockWithAccess('mime', AdminGui::class, 1);
         $admingui->setContext($context);
 
         // use __call() here
         $args = ['hello' => 'world'];
         $data = $admingui->view($args);
 
+        // This is no longer the case with core services without core trait
         // this will return null because it's trying to find something like
         // MockObject_AdminGui_62c03933\ViewMethod as method class to __call
-        $expected = null;
-        $this->assertEquals($expected, $data);
+        //$expected = null;
+        //$this->assertEquals($expected, $data);
+
+        $expected = array_merge($args, [
+            'objectname' => 'mime_types',
+            'object' => 'DataObjectList(...)',
+            'options' => ['...'],
+            'context' => $context,
+        ]);
+        $this->assertEquals(array_keys($expected), array_keys($data));
 
         $expected = $context;
         $this->assertEquals($expected, $admingui->getContext());
