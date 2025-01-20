@@ -52,7 +52,8 @@ class MimeToExtensionMethod extends MethodClass
             $msg = $this->ml('Missing mime type or subtype parameter!');
             throw new Exception($msg);
         }
-        $userapi = $this->getParent();
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         $args = [
             'typeName' => $typeparts[0],

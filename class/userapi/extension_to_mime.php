@@ -60,7 +60,8 @@ class ExtensionToMimeMethod extends MethodClass
         if (count($parts) < 2) {
             return 'application/octet-stream';
         }
-        $userapi = $this->getParent();
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         $extension = $parts[count($parts) - 1];
         $extensionInfo = $userapi->getExtension(['extensionName' => $extension]);

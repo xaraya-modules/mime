@@ -45,7 +45,8 @@ class GetMagicMethod extends MethodClass
             $msg = $this->ml('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId', 'userapi_get_magic', 'mime');
             throw new Exception($msg);
         }
-        $userapi = $this->getParent();
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         // apply where clauses if relevant
         if (isset($magicId)) {

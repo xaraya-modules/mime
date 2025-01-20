@@ -40,7 +40,9 @@ class GetSubtypeMethod extends MethodClass
      */
     public function __invoke(array $args = [])
     {
-        $userapi = $this->getParent();
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
+
         // Farm the query off.
         // No need to duplicate the database query here.
         $subtypes = $userapi->getallSubtypes($args);

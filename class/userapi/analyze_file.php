@@ -90,7 +90,8 @@ class AnalyzeFileMethod extends MethodClass
                 return $fileInfo['mime'];
             }
         }
-        $userapi = $this->getParent();
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         // Otherwise, see if the file is empty and, if so
         // return it as octet-stream

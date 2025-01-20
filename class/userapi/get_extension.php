@@ -45,7 +45,8 @@ class GetExtensionMethod extends MethodClass
             $msg = $this->ml('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_extension');
             throw new Exception($msg);
         }
-        $userapi = $this->getParent();
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         // apply where clauses if relevant
         if (isset($extensionId)) {

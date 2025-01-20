@@ -43,7 +43,9 @@ class GetallSubtypesMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         extract($args);
-        $userapi = $this->getParent();
+
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         // The complete mime name can be passed in (type/subtype) and this
         // will be split up here for convenience.

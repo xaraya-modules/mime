@@ -47,7 +47,8 @@ class GetMimetypeMethod extends MethodClass
             $msg = $this->ml('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_subtype');
             throw new Exception($msg);
         }
-        $userapi = $this->getParent();
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         // No need to duplicate the database query here.
         $subtypes = $userapi->getallSubtypes($args);

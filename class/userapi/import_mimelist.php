@@ -37,7 +37,9 @@ class ImportMimelistMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         extract($args);
-        $userapi = $this->getParent();
+
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         $descriptions = [];
 

@@ -52,7 +52,8 @@ class GetRevMimetypeMethod extends MethodClass
             $types->getItem(['itemid' => $mimeType]);
             $mimeType = $types->properties['name']->value;
         }
-        $userapi = $this->getParent();
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         $mimeType = explode('/', $mimeType);
 
