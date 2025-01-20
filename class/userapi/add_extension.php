@@ -64,8 +64,8 @@ class AddExtensionMethod extends MethodClass
         }
 
         // Get database setup
-        $dbconn = xarDB::getConn();
-        $xartable     = & xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable     = & $this->db()->getTables();
 
         // table and column definitions
         $extension_table = & $xartable['mime_extension'];

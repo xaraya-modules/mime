@@ -42,7 +42,7 @@ class ViewMethod extends MethodClass
         }
         // Define which object will be shown
         if (!$this->var()->check('objectname', $args['objectname'], 'str')) {
-            // Pass along the context for xarTpl::module() if needed
+            // Pass along the context for $this->tpl()->module() if needed
             $args['context'] ??= $this->getContext();
             return $args;
         }
@@ -69,7 +69,7 @@ class ViewMethod extends MethodClass
         }
         $args['options'] = $options;
 
-        // Pass along the context for xarTpl::module() if needed
+        // Pass along the context for $this->tpl()->module() if needed
         $args['context'] ??= $this->getContext();
         return $args;
     }

@@ -43,8 +43,8 @@ class AddTypeMethod extends MethodClass
         extract($args);
 
         // Get database setup
-        $dbconn = xarDB::getConn();
-        $xartable     = & xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable     = & $this->db()->getTables();
 
         if (!isset($typeName) || empty($typeName)) {
             $msg = $this->ml(
