@@ -26,15 +26,16 @@
  * @access private
  * @return array
  */
-function mime_xartables()
+function mime_xartables(?string $prefix = null)
 {
     // Initialise table array
     $xartable = [];
+    $prefix ??= xarDB::getPrefix();
 
-    $mime_type      = xarDB::getPrefix() . '_mime_type';
-    $mime_subtype   = xarDB::getPrefix() . '_mime_subtype';
-    $mime_extension = xarDB::getPrefix() . '_mime_extension';
-    $mime_magic     = xarDB::getPrefix() . '_mime_magic';
+    $mime_type      = $prefix . '_mime_type';
+    $mime_subtype   = $prefix . '_mime_subtype';
+    $mime_extension = $prefix . '_mime_extension';
+    $mime_magic     = $prefix . '_mime_magic';
 
     // Set the table name
     $xartable['mime_type']      = $mime_type;
