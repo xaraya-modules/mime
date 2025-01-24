@@ -48,7 +48,7 @@ class GetRevMimetypeMethod extends MethodClass
         }
         if (is_numeric($mimeType)) {
             // Do a lookup
-            $types = DataObjectFactory::getObject(['name' => 'mime_types']);
+            $types = $this->data()->getObject(['name' => 'mime_types']);
             $types->getItem(['itemid' => $mimeType]);
             $mimeType = $types->properties['name']->value;
         }

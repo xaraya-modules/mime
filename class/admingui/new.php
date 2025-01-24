@@ -49,7 +49,7 @@ class NewMethod extends MethodClass
             return;
         }
 
-        $data['object'] = DataObjectFactory::getObject(['name' => $name]);
+        $data['object'] = $this->data()->getObject(['name' => $name]);
         $data['tplmodule'] = 'mime';
         $data['authid'] = $this->sec()->genAuthKey();
 
