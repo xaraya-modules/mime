@@ -15,6 +15,7 @@ namespace Xaraya\Modules\Mime;
 
 use Xaraya\DataObject\Traits\UserApiInterface;
 use Xaraya\DataObject\Traits\UserApiTrait;
+use Xaraya\DataObject\Traits\UserApiClass;
 use DataObjectFactory;
 use DataObjectList;
 use sys;
@@ -65,11 +66,8 @@ sys::import('modules.dynamicdata.class.traits.userapi');
  * array{mime_type: string}
  * @extends UserApiClass<Module>
  */
-class UserApi implements UserApiInterface
+class UserApi extends UserApiClass
 {
-    /** @use UserApiTrait<Module> */
-    use UserApiTrait;
-
     protected static MimeTypeDetector $detector;
 
     /**
