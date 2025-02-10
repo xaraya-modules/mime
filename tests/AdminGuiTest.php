@@ -13,7 +13,7 @@ final class AdminGuiTest extends TestHelper
     public function testAdminGui(): void
     {
         $expected = AdminGui::class;
-        $admingui = xarMod::getModule('mime')->getAdminGUI();
+        $admingui = xarMod::getModule('mime')->admingui();
         $this->assertEquals($expected, $admingui::class);
     }
 

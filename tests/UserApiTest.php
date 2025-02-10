@@ -17,7 +17,7 @@ final class UserApiTest extends TestHelper
     public function testGetDetector(): void
     {
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
 
         $expected = MimeTypeDetector::class;
         $detector = $userapi->getDetector();
@@ -47,7 +47,7 @@ final class UserApiTest extends TestHelper
     public function testCheckFileType($path, $expectedMimeType, $expectedAlternative): void
     {
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $mimeType = $userapi->checkFileType($path);
         if ($expectedMimeType == 'text/plain') {
             $expected = $expectedAlternative;
@@ -76,7 +76,7 @@ final class UserApiTest extends TestHelper
         }
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $extension = $userapi->getNewExtension($mimeType);
         // @todo unsupported extensions .xt and .*.twig + alternative .php mimeType
         if ($extension != $expected && !is_null($alternative)) {
@@ -88,7 +88,7 @@ final class UserApiTest extends TestHelper
     public function testGetMimeTypeList(): void
     {
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
 
         $expected = 'mime_types';
         $typelist = $userapi->getMimeTypeList();
@@ -106,7 +106,7 @@ final class UserApiTest extends TestHelper
     public function testGetSubTypeList(): void
     {
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
 
         $expected = 'mime_subtypes';
         $subtypelist = $userapi->getSubTypeList();
@@ -124,7 +124,7 @@ final class UserApiTest extends TestHelper
     public function testGetExtensionList(): void
     {
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
 
         $expected = 'mime_extensions';
         $extensionlist = $userapi->getExtensionList();
@@ -142,7 +142,7 @@ final class UserApiTest extends TestHelper
     public function testGetMagicList(): void
     {
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
 
         $expected = 'mime_magic';
         $magiclist = $userapi->getMagicList();
@@ -166,7 +166,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getType(['typeId' => $typeId]);
 
         $this->assertEquals($expected, $result);
@@ -181,7 +181,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getType(['typeName' => $typeName]);
 
         $this->assertEquals($expected, $result);
@@ -199,7 +199,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getSubtype(['subtypeId' => $subtypeId]);
 
         $this->assertEquals($expected, $result);
@@ -218,7 +218,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getSubtype([
             'typeName' => $typeName,
             'subtypeName' => $subtypeName,
@@ -237,7 +237,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getExtension(['extensionId' => $extensionId]);
 
         $this->assertEquals($expected, $result);
@@ -253,7 +253,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getExtension(['extensionName' => $extensionName]);
 
         $this->assertEquals($expected, $result);
@@ -271,7 +271,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getMagic(['magicId' => $magicId]);
 
         $this->assertEquals($expected, $result);
@@ -289,7 +289,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getMagic(['magicValue' => $magicValue]);
 
         $this->assertEquals($expected, $result);
@@ -301,7 +301,7 @@ final class UserApiTest extends TestHelper
         $expected = 'image/gif';
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getMimetype(['subtypeId' => $subtypeId]);
 
         $this->assertEquals($expected, $result);
@@ -313,7 +313,7 @@ final class UserApiTest extends TestHelper
         $expected = 'image/jpeg';
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getMimetype(['subtypeName' => $subtypeName]);
 
         $this->assertEquals($expected, $result);
@@ -328,7 +328,7 @@ final class UserApiTest extends TestHelper
         ];
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getRevMimetype(['mimeType' => $mimeType]);
 
         $this->assertEquals($expected, $result);
@@ -348,7 +348,7 @@ final class UserApiTest extends TestHelper
         }
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->analyzeFile(['fileName' => $path]);
 
         if ($result != $expected && !empty($alternative)) {
@@ -382,7 +382,7 @@ final class UserApiTest extends TestHelper
         $expected = 'application/zip';
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->extensionToMime(['fileName' => $fileName]);
 
         $this->assertEquals($expected, $result);
@@ -394,7 +394,7 @@ final class UserApiTest extends TestHelper
         $expected = 'pdf';
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->mimeToExtension(['mime_type' => $mimeType]);
 
         $this->assertEquals($expected, $result);
@@ -409,7 +409,7 @@ final class UserApiTest extends TestHelper
         xarServer::setBaseURL($baseurl);
 
         /** @var UserApi $userapi */
-        $userapi = xarMod::getAPI('mime');
+        $userapi = xarMod::userapi('mime');
         $result = $userapi->getMimeImage(['mimeType' => $mimeType]);
 
         $this->assertEquals($expected, $result);
