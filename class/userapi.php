@@ -13,14 +13,14 @@
 
 namespace Xaraya\Modules\Mime;
 
-use Xaraya\DataObject\Traits\UserApiInterface;
-use Xaraya\DataObject\Traits\UserApiTrait;
-use Xaraya\DataObject\Traits\UserApiClass;
+use Xaraya\Modules\DynamicData\Traits\UserApiInterface;
+use Xaraya\Modules\DynamicData\Traits\UserApiTrait;
+use Xaraya\Modules\DynamicData\Traits\UserApiClass;
 use DataObjectFactory;
 use DataObjectList;
 use sys;
 
-sys::import('modules.dynamicdata.class.traits.userapi');
+sys::import('modules.dynamicdata.traits.userapi');
 
 /**
  * Class to handle the Mime User API
