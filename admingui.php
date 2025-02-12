@@ -17,7 +17,7 @@ use Xaraya\Modules\AdminGuiClass;
 use sys;
 
 sys::import('modules.dynamicdata.class.objects.factory');
-sys::import('modules.mime.class.userapi');
+sys::import('modules.mime.userapi');
 sys::import('xaraya.modules.admingui');
 
 /**
