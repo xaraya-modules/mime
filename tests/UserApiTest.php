@@ -1,8 +1,13 @@
 <?php
 
+namespace Xaraya\Modules\Mime\Tests;
+
 use Xaraya\Modules\TestHelper;
 use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\Mime\MimeTypeDetector;
+use xarMod;
+use xarServer;
+use Exception;
 
 final class UserApiTest extends TestHelper
 {

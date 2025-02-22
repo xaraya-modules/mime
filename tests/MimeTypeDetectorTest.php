@@ -1,5 +1,7 @@
 <?php
 
+namespace Xaraya\Modules\Mime\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Xaraya\Modules\Mime\MimeTypeDetector;
 
@@ -113,7 +115,7 @@ final class MimeTypeDetectorTest extends TestCase
      */
     public function testFinfoMimeTypeDetector(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
-        $detector = new League\MimeTypeDetection\FinfoMimeTypeDetector();
+        $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
         $contents = file_get_contents($path);
 
         // Detect by contents, fall back to detection by extension.
@@ -132,7 +134,7 @@ final class MimeTypeDetectorTest extends TestCase
      */
     public function testFinfoMimeTypeDetectorBuffer(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
-        $detector = new League\MimeTypeDetection\FinfoMimeTypeDetector();
+        $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
         $contents = file_get_contents($path);
 
         // Detect by contents only, no extension fallback.
@@ -145,7 +147,7 @@ final class MimeTypeDetectorTest extends TestCase
      */
     public function testFinfoMimeTypeDetectorFile(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
-        $detector = new League\MimeTypeDetection\FinfoMimeTypeDetector();
+        $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
         //$contents = file_get_contents($path);
 
         // Detect by actual file, no extension fallback.
@@ -158,7 +160,7 @@ final class MimeTypeDetectorTest extends TestCase
      */
     public function testFinfoMimeTypeDetectorPath(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
-        $detector = new League\MimeTypeDetection\FinfoMimeTypeDetector();
+        $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
         //$contents = file_get_contents($path);
 
         // Only detect by extension
@@ -171,7 +173,7 @@ final class MimeTypeDetectorTest extends TestCase
      */
     public function testExtensionMimeTypeDetector(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
-        $detector = new League\MimeTypeDetection\ExtensionMimeTypeDetector();
+        $detector = new \League\MimeTypeDetection\ExtensionMimeTypeDetector();
         $contents = file_get_contents($path);
 
         // Only detect by extension, ignores the file contents
@@ -193,7 +195,7 @@ final class MimeTypeDetectorTest extends TestCase
 
     public function testExtensionToMimeTypeMap(): void
     {
-        $map = new League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap();
+        $map = new \League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap();
 
         // string mime-type or NULL
         $mimeType = $map->lookupMimeType('jpg');

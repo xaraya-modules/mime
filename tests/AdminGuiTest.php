@@ -1,8 +1,11 @@
 <?php
 
+namespace Xaraya\Modules\Mime\Tests;
+
 use Xaraya\Modules\TestHelper;
 use Xaraya\Modules\Mime\AdminGui;
 use Xaraya\Modules\Mime\AdminGui\ViewMethod;
+use xarMod;
 
 final class AdminGuiTest extends TestHelper
 {
