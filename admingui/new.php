@@ -42,12 +42,8 @@ class NewMethod extends MethodClass
             return;
         }
 
-        if (!$this->var()->find('name', $name, 'str', 'mime_types')) {
-            return;
-        }
-        if (!$this->var()->find('confirm', $data['confirm'], 'bool', false)) {
-            return;
-        }
+        $this->var()->find('name', $name, 'str', 'mime_types');
+        $this->var()->find('confirm', $data['confirm'], 'bool', false);
 
         $data['object'] = $this->data()->getObject(['name' => $name]);
         $data['tplmodule'] = 'mime';
@@ -55,9 +51,7 @@ class NewMethod extends MethodClass
 
         if ($data['confirm']) {
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if (!$this->var()->check('preview', $preview, 'str')) {
-                return;
-            }
+            $this->var()->check('preview', $preview, 'str');
 
             // Check for a valid confirmation key
             if (!$this->sec()->confirmAuthKey()) {

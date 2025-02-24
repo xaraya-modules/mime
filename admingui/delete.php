@@ -41,15 +41,9 @@ class DeleteMethod extends MethodClass
             return;
         }
 
-        if (!$this->var()->find('name', $name, 'str:1', 'mime_types')) {
-            return;
-        }
-        if (!$this->var()->find('itemid', $data['itemid'], 'int', '')) {
-            return;
-        }
-        if (!$this->var()->find('confirm', $data['confirm'], 'str:1', false)) {
-            return;
-        }
+        $this->var()->find('name', $name, 'str:1', 'mime_types');
+        $this->var()->find('itemid', $data['itemid'], 'int', '');
+        $this->var()->find('confirm', $data['confirm'], 'str:1', false);
 
         $data['object'] = $this->data()->getObject(['name' => $name]);
         $data['object']->getItem(['itemid' => $data['itemid']]);

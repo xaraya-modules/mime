@@ -41,11 +41,7 @@ class ViewMethod extends MethodClass
             return;
         }
         // Define which object will be shown
-        if (!$this->var()->check('objectname', $args['objectname'], 'str')) {
-            // Pass along the context for $this->tpl()->module() if needed
-            $args['context'] ??= $this->getContext();
-            return $args;
-        }
+        $this->var()->check('objectname', $args['objectname'], 'str');
 
         /** @var UserApi $userapi */
         $userapi = $this->userapi();

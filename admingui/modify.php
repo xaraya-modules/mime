@@ -42,15 +42,9 @@ class ModifyMethod extends MethodClass
             return;
         }
 
-        if (!$this->var()->find('name', $name, 'str', 'mime_types')) {
-            return;
-        }
-        if (!$this->var()->find('itemid', $data['itemid'], 'int', 0)) {
-            return;
-        }
-        if (!$this->var()->find('confirm', $data['confirm'], 'bool', false)) {
-            return;
-        }
+        $this->var()->find('name', $name, 'str', 'mime_types');
+        $this->var()->find('itemid', $data['itemid'], 'int', 0);
+        $this->var()->find('confirm', $data['confirm'], 'bool', false);
 
         $data['object'] = $this->data()->getObject(['name' => $name]);
         $data['object']->getItem(['itemid' => $data['itemid']]);
