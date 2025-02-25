@@ -47,9 +47,9 @@ class ViewMethod extends MethodClass
         $userapi = $this->userapi();
 
         if (!empty($args['objectname'])) {
-            xarModUserVars::set($this->getModName(), 'defaultmastertable', $args['objectname']);
+            $this->mod()->setUserVar('defaultmastertable', $args['objectname']);
         }
-        $args['objectname'] = xarModUserVars::get($this->getModName(), 'defaultmastertable');
+        $args['objectname'] = $this->mod()->getUserVar('defaultmastertable');
         $args['object'] = match ($args['objectname']) {
             'mime_types'      => $userapi->getMimeTypeList(),
             'mime_subtypes'   => $userapi->getSubTypeList(),
