@@ -37,6 +37,7 @@ class MainMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         $this->ctl()->redirect($this->mod()->getURL('admin', 'view'));
+        return true;
 
         if (!$this->sec()->checkAccess('ManageMime')) {
             return;
