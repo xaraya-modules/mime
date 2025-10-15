@@ -13,8 +13,6 @@
 
 namespace Xaraya\Modules\Mime;
 
-use Xaraya\Modules\DynamicData\Traits\UserApiInterface;
-use Xaraya\Modules\DynamicData\Traits\UserApiTrait;
 use Xaraya\Modules\DynamicData\Traits\UserApiClass;
 use DataObjectFactory;
 use DataObjectList;

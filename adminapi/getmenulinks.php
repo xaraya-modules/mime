@@ -14,9 +14,7 @@ namespace Xaraya\Modules\Mime\AdminApi;
 
 use Xaraya\Modules\Mime\AdminApi;
 use Xaraya\Modules\MethodClass;
-use xarMod;
 use sys;
-use BadParameterException;
 
 sys::import('xaraya.modules.method');
 

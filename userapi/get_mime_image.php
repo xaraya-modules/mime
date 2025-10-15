@@ -14,7 +14,6 @@ namespace Xaraya\Modules\Mime\UserApi;
 
 use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
-use xarTpl;
 use sys;
 use Exception;
 
