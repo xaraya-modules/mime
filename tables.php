@@ -20,8 +20,6 @@
 
 namespace Xaraya\Modules\Mime;
 
-use xarDB;
-
 class Tables
 {
     /**
@@ -33,11 +31,10 @@ class Tables
      * @access private
      * @return array
      */
-    public function __invoke(?string $prefix = null)
+    public function __invoke(string $prefix = 'xar')
     {
         // Initialise table array
         $xartable = [];
-        $prefix ??= xarDB::getPrefix();
 
         $mime_type      = $prefix . '_mime_type';
         $mime_subtype   = $prefix . '_mime_subtype';
