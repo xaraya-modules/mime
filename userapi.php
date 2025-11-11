@@ -18,8 +18,6 @@ use DataObjectFactory;
 use DataObjectList;
 use sys;
 
-sys::import('modules.dynamicdata.traits.userapi');
-
 /**
  * Class to handle the Mime User API
  *

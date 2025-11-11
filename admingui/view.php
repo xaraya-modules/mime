@@ -13,13 +13,9 @@
 
 namespace Xaraya\Modules\Mime\AdminGui;
 
-
 use Xaraya\Modules\Mime\AdminGui;
 use Xaraya\Modules\MethodClass;
 use Xaraya\Modules\Mime\UserApi;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * Admin view GUI function

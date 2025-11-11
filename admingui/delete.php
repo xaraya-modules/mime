@@ -11,12 +11,8 @@
 
 namespace Xaraya\Modules\Mime\AdminGui;
 
-
 use Xaraya\Modules\Mime\AdminGui;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * mime admin delete function

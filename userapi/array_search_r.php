@@ -11,12 +11,8 @@
 
 namespace Xaraya\Modules\Mime\UserApi;
 
-
 use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * mime userapi array_search_r function

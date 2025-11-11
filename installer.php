@@ -18,9 +18,6 @@ namespace Xaraya\Modules\Mime;
 use Xaraya\Modules\InstallerClass;
 use xarMasks;
 use xarPrivileges;
-use sys;
-
-sys::import('xaraya.modules.installer');
 
 /**
  * Handle module installer functions
@@ -99,6 +96,7 @@ class Installer extends InstallerClass
                 // Re-create DD objects to fix extension
                 parent::delete();
                 parent::init();
+                // no break
             case '2.6.0':
                 // Upgrade from version 2.6.0
         }

@@ -11,12 +11,8 @@
 
 namespace Xaraya\Modules\Mime\AdminApi;
 
-
 use Xaraya\Modules\Mime\AdminApi;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * mime adminapi getmenulinks function

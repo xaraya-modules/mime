@@ -14,11 +14,6 @@
 namespace Xaraya\Modules\Mime;
 
 use Xaraya\Modules\AdminGuiClass;
-use sys;
-
-sys::import('modules.dynamicdata.class.objects.factory');
-sys::import('modules.mime.userapi');
-sys::import('xaraya.modules.admingui');
 
 /**
  * Handle the mime admin GUI

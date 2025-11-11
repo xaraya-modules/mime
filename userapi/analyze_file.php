@@ -13,10 +13,7 @@ namespace Xaraya\Modules\Mime\UserApi;
 
 use Xaraya\Modules\Mime\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * mime userapi analyze_file function
