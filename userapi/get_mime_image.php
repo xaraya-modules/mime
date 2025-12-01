@@ -64,7 +64,7 @@ class GetMimeImageMethod extends MethodClass
         // Try the complete mimetype-subtype image.
         foreach ($fileSuffixes as $fileSuffix) {
             $imageFile = $mimeType[0] . '-' . $mimeType[1] . $fileSuffix;
-            if ($imageURI = $this->tpl()->getImage($imageFile, 'mime')) {
+            if ($imageURI = $this->tpl()->getImage($imageFile, 'module', 'mime')) {
                 break;
             }
         }
@@ -73,7 +73,7 @@ class GetMimeImageMethod extends MethodClass
         if ($imageURI == null) {
             foreach ($fileSuffixes as $fileSuffix) {
                 $imageFile = $mimeType[0] . $fileSuffix;
-                if ($imageURI = $this->tpl()->getImage($imageFile, 'mime')) {
+                if ($imageURI = $this->tpl()->getImage($imageFile, 'module', 'mime')) {
                     break;
                 }
             }
@@ -81,7 +81,7 @@ class GetMimeImageMethod extends MethodClass
             if ($imageURI == null) {
                 foreach ($fileSuffixes as $fileSuffix) {
                     $imageFile = $defaultBase . $fileSuffix;
-                    if ($imageURI = $this->tpl()->getImage($imageFile, 'mime')) {
+                    if ($imageURI = $this->tpl()->getImage($imageFile, 'module', 'mime')) {
                         break;
                     }
                 }
