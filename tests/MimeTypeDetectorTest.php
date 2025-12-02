@@ -2,6 +2,7 @@
 
 namespace Xaraya\Modules\Mime\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xaraya\Modules\Mime\MimeTypeDetector;
 
@@ -49,9 +50,7 @@ final class MimeTypeDetectorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideFileResults
-     */
+    #[DataProvider('provideFileResults')]
     public function testCheckFileType(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
         $detector = new MimeTypeDetector();
@@ -65,9 +64,7 @@ final class MimeTypeDetectorTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideFileResults
-     */
+    #[DataProvider('provideFileResults')]
     public function testGetMimeType(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
         $extension = pathinfo($path, PATHINFO_EXTENSION);
@@ -78,9 +75,7 @@ final class MimeTypeDetectorTest extends TestCase
         $this->assertEquals($expectedExtension, $mimeType);
     }
 
-    /**
-     * @dataProvider provideFileResults
-     */
+    #[DataProvider('provideFileResults')]
     public function testGetExtension(string $path, ?string $mimeTypeContent, ?string $mimeTypeExtension): void
     {
         $mimeType = $mimeTypeExtension ?? $mimeTypeContent;
@@ -110,9 +105,7 @@ final class MimeTypeDetectorTest extends TestCase
         $this->assertCount($expected, $detector->getMimeTypesForExtensionsMap());
     }
 
-    /**
-     * @dataProvider provideFileResults
-     */
+    #[DataProvider('provideFileResults')]
     public function testFinfoMimeTypeDetector(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
         $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
@@ -129,9 +122,7 @@ final class MimeTypeDetectorTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideFileResults
-     */
+    #[DataProvider('provideFileResults')]
     public function testFinfoMimeTypeDetectorBuffer(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
         $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
@@ -142,9 +133,7 @@ final class MimeTypeDetectorTest extends TestCase
         $this->assertEquals($expectedContent, $mimeType);
     }
 
-    /**
-     * @dataProvider provideFileResults
-     */
+    #[DataProvider('provideFileResults')]
     public function testFinfoMimeTypeDetectorFile(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
         $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
@@ -155,9 +144,7 @@ final class MimeTypeDetectorTest extends TestCase
         $this->assertEquals($expectedContent, $mimeType);
     }
 
-    /**
-     * @dataProvider provideFileResults
-     */
+    #[DataProvider('provideFileResults')]
     public function testFinfoMimeTypeDetectorPath(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
         $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
@@ -168,9 +155,7 @@ final class MimeTypeDetectorTest extends TestCase
         $this->assertEquals($expectedExtension, $mimeType);
     }
 
-    /**
-     * @dataProvider provideFileResults
-     */
+    #[DataProvider('provideFileResults')]
     public function testExtensionMimeTypeDetector(string $path, ?string $expectedContent, ?string $expectedExtension): void
     {
         $detector = new \League\MimeTypeDetection\ExtensionMimeTypeDetector();

@@ -5,7 +5,7 @@ namespace Xaraya\Modules\Mime\Tests;
 use Xaraya\Modules\TestHelper;
 use Xaraya\Modules\Mime\AdminGui;
 use Xaraya\Modules\Mime\AdminGui\ViewMethod;
-use xarMod;
+use Xaraya\Services\xar;
 
 final class AdminGuiTest extends TestHelper
 {
@@ -16,7 +16,7 @@ final class AdminGuiTest extends TestHelper
     public function testAdminGui(): void
     {
         $expected = AdminGui::class;
-        $admingui = xarMod::getModule('mime')->admingui();
+        $admingui = xar::mod()->getModule('mime')->admingui();
         $this->assertEquals($expected, $admingui::class);
     }
 

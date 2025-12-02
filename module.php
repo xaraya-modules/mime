@@ -16,7 +16,7 @@ namespace Xaraya\Modules\Mime;
 use Xaraya\Modules\ModuleClass;
 
 /**
- * Get mime module classes via xarMod::getModule()
+ * Get mime module classes via xar::mod()->getModule()
  */
 class Module extends ModuleClass
 {
