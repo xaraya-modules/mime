@@ -10,7 +10,7 @@
             </xar:ml>
         </h2>
 
-        <form method="post" action="#xarServer::getCurrentURL()#">
+        <form method="post" action="#$xar->ctl()->getCurrentURL()#">
           <fieldset>
             <legend>Item details</legend>
             <xar:data-form object="$object" tplmodule="$tplmodule"/>

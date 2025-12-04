@@ -16,7 +16,7 @@
 
         <xar:data-display object="$object"/>
 
-        <form method="post" action="#xarServer::getCurrentURL()#">
+        <form method="post" action="#$xar->ctl()->getCurrentURL()#">
             <div class="xar-align-center">
                 <input type="hidden" name="authid" id="authid" value="#$authid#"/>
                 <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#"/>
